@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hector website · design preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FAFAF8; --ink:#0C0A14; --muted:#5B5866; --soft:#8A8794; --border:#E6E4DF; --purple:#7C3AED; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; display: grid; place-items: center; padding: 48px 16px; -webkit-font-smoothing: antialiased; }
+  main { width: 100%; max-width: 720px; }
+  .logo { height: 26px; margin-bottom: 40px; }
+  h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; letter-spacing: -0.03em; font-weight: 700; }
+  .lede { margin-top: 14px; font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 52ch; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+  a.card { display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+  a.card:hover, a.card:focus-visible { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 12px 32px -16px rgba(12,10,20,.25); outline: none; }
+  .k { font-size: 13px; font-weight: 600; color: var(--soft); letter-spacing: .02em; }
+  .t { margin-top: 8px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .d { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+  .go { margin-top: 20px; font-size: 15px; font-weight: 600; color: var(--purple); }
+  .note { margin-top: 28px; font-size: 13px; line-height: 1.6; color: var(--soft); }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="hector-website-revamp/public/assets/logos/hector-light-bg.svg" alt="Hector">
+  <h1>Website revamp, design preview</h1>
+  <p class="lede">Two journeys, one design system. Pick one and click around: the menus, case studies, forms and videos all work, on desktop and phone.</p>
+  <div class="grid">
+    <a class="card" href="homepage-v2/">
+      <p class="k">India</p>
+      <p class="t">India journey</p>
+      <p class="d">All marketplaces and quick commerce, priced in INR.</p>
+      <p class="go">Open India homepage →</p>
+    </a>
+    <a class="card" href="homepage-v2-us/">
+      <p class="k">Global</p>
+      <p class="t">Global journey</p>
+      <p class="d">US, UK, Europe and beyond. Amazon Ads, DSP and AMC, priced in USD.</p>
+      <p class="go">Open Global homepage →</p>
+    </a>
+  </div>
+  <p class="note">Draft for internal review. Numbers, quotes and phone numbers may still be placeholders, and URLs will follow the final architecture.</p>
+</main>
+</body>
+</html>

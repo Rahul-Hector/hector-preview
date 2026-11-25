@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Managed Service — Hector</title>
+    <link rel="alternate" hreflang="en-in" href="../managed-service/">
+  <link rel="alternate" hreflang="en-us" href="../managed-service-us/">
+  <meta name="description" content="A dedicated Hector pod runs your Amazon Ads, DSP and AMC, using the platform built by people who run the ads.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #FAFAF8;
+      --text-dark: #16151A;
+      --text-muted: #6E6B7B;
+      --text-light: #9C99A8;
+      --gradient: linear-gradient(100deg, #7C3AED, #C026D3);
+      --border: rgba(20,21,26, 0.08);
+      --card-white: #fff;
+      --radius-sm: 8px;
+      --radius-btn: 10px;
+      --radius-card: 16px;
+      --radius-lg: 20px;
+      --max-w: 1180px;
+      --px: clamp(24px, 5vw, 56px);
+      --placeholder-border: 2px dashed rgba(124,58,237,0.3);
+      --placeholder-bg: rgba(124,58,237,0.03);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      padding-top: 80px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .gradient { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .mono-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    [data-placeholder="true"] {
+      border: var(--placeholder-border);
+      background: var(--placeholder-bg);
+    }
+
+    /* ═══════════════════════════════════════
+       NAV (matches homepage)
+    ═══════════════════════════════════════ */
+    .nav {
+      height: 60px;
+      display: flex; align-items: center;
+      padding: 0 clamp(24px, 5vw, 72px);
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(20,21,26,0.09);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    }
+    .nav-left { display: flex; align-items: center; gap: 16px; flex: 1; }
+    .nav-left img { height: 30px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 8px; list-style: none; margin-right: 16px; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--text-dark);
+      text-decoration: none; padding: 6px 12px; border-radius: 8px;
+      transition: background 140ms;
+    }
+    .nav-links a:hover { background: rgba(20,21,26,0.06); }
+    .nav-login {
+      display: inline-flex; align-items: center;
+      font-size: 14px; font-weight: 600; color: var(--text-dark);
+      text-decoration: none; padding: 9px 20px; border-radius: 10px;
+      border: 1.5px solid rgba(20,21,26,0.15);
+      transition: background 140ms, border-color 140ms;
+    }
+    .nav-login:hover { background: rgba(20,21,26,0.05); border-color: rgba(20,21,26,0.25); }
+    .nav-cta {
+      display: inline-flex; align-items: center;
+      padding: 9px 20px; background: var(--text-dark); color: #fff;
+      font-size: 14px; font-weight: 600; border-radius: 10px;
+      text-decoration: none; transition: background 140ms;
+    }
+    .nav-cta:hover { background: #2d2b38; }
+
+    /* ═══════════════════════════════════════
+       HERO — people-led
+    ═══════════════════════════════════════ */
+    .hero { padding: 0; overflow-x: clip; }
+    .hero .container {
+      min-height: calc(100dvh - 80px);
+      display: grid;
+      grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
+      gap: clamp(40px, 5vw, 72px);
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 64px;
+    }
+    .hero .eyebrow { margin-bottom: 22px; }
+    .hero h1 {
+      font-size: clamp(34px, 3.4vw, 50px);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+      text-wrap: balance;
+    }
+    .hero-sub {
+      font-size: 16.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 40ch;
+      margin-bottom: 32px;
+    }
+    .hero-ctas { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--text-dark); color: #fff;
+      padding: 15px 26px; border-radius: var(--radius-btn);
+      font-size: 15px; font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+    .btn-primary:hover { background: #2d2b38; }
+    .btn-primary:active { transform: translateY(1px); }
+    .btn-primary .arr { transition: transform .25s cubic-bezier(0.22,1,0.36,1); }
+    .btn-primary:hover .arr { transform: translateX(4px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center;
+      font-size: 15px; font-weight: 600; color: var(--text-dark);
+      padding: 15px 22px; border-radius: var(--radius-btn);
+      border: 1.5px solid rgba(20,21,26,0.15);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: rgba(20,21,26,0.3); background: rgba(20,21,26,0.03); }
+
+    .hero-trust { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); max-width: 520px; }
+    .hero-trust-lbl { font-size: 13px; color: #67646F; margin-bottom: 16px; }
+    .hero-trust-lbl strong { color: var(--text-dark); font-weight: 600; }
+    .hero-logos {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 90%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 90%, transparent);
+    }
+    .hero-logos-track { display: flex; align-items: center; gap: 40px; width: max-content; animation: ms-marquee 40s linear infinite; }
+    .hero-logos:hover .hero-logos-track { animation-play-state: paused; }
+    .hero-logos img { height: 26px; width: auto; max-width: 104px; object-fit: contain; filter: grayscale(1); opacity: .55; transition: opacity .25s, filter .25s, transform .25s; }
+    .hero-logos img:hover { opacity: 1; filter: grayscale(0); transform: scale(1.06); }
+    .hero-logos img.lg { height: 32px; }
+    .hero-logos-track { gap: 48px; }
+    .hero-logos img.us-ck { height: 40px; max-width: 48px; }
+    .hero-logos img.us-el { height: 17px; max-width: 130px; }
+    .hero-logos img.us-jk { height: 21px; max-width: 120px; }
+    .hero-logos img.us-th { height: 12px; max-width: 200px; }
+    .hero-logos img.us-op { height: 20px; max-width: 80px; }
+    @keyframes ms-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Media: real team photo + live overlays */
+    .hero-media { position: relative; }
+    .hero-photo {
+      position: relative; border-radius: 28px; overflow: hidden;
+      aspect-ratio: 5 / 5.4; background: #E7E5DF;
+      box-shadow: 0 1px 2px rgba(20,21,26,.06), 0 24px 60px -12px rgba(40,20,80,.18);
+    }
+    .hero-photo img { position: absolute; left: 0; bottom: 0; width: 100%; height: 116%; object-fit: cover; object-position: 58% 100%; display: block; }
+    .hero-photo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(12,10,20,0) 52%, rgba(12,10,20,.55) 100%);
+      pointer-events: none;
+    }
+
+    .hero-chip {
+      position: absolute; z-index: 2;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 0 0 1px rgba(20,21,26,.05), 0 12px 32px -8px rgba(40,20,80,.22);
+    }
+    .hero-chip--pod { top: 28px; left: -28px; padding: 14px 18px 14px 14px; display: flex; align-items: center; gap: 14px; }
+    .hero-avs { display: flex; }
+    .hero-av {
+      width: 34px; height: 34px; border-radius: 50%; border: 2px solid #fff;
+      display: grid; place-items: center; font-size: 11.5px; font-weight: 700; color: #fff;
+      margin-left: -10px;
+    }
+    .hero-av:first-child { margin-left: 0; }
+    .hero-av--1 { background: #7C3AED; } .hero-av--2 { background: #A21CAF; } .hero-av--3 { background: #16151A; } .hero-av--4 { background: #57534E; }
+    .hero-chip-t { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-dark); line-height: 1.25; }
+    .hero-chip-d { font-size: 12.5px; color: #67646F; line-height: 1.3; }
+
+    .hero-chip--result { top: 36%; right: -24px; padding: 16px 18px; min-width: 176px; }
+    .hero-chip-k { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #67646F; }
+    .hero-chip-v { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-top: 6px; }
+    .hero-chip-v small { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-dark); -webkit-text-fill-color: var(--text-dark); margin-left: 4px; }
+    .hero-spark { display: block; width: 140px; height: 34px; margin-top: 8px; }
+    .hero-spark path { fill: none; stroke: url(#sparkGrad); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .hero-toast {
+      position: absolute; z-index: 2; left: 20px; right: 20px; bottom: 20px;
+      display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center;
+      padding: 14px 16px; border-radius: 18px;
+      background: rgba(16,14,24,.72);
+      backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #F2F1F6;
+    }
+    .hero-toast-logo { width: 40px; height: 40px; border-radius: 11px; background: #fff; display: grid; place-items: center; overflow: hidden; }
+    .hero-toast-logo img { width: 30px; height: 30px; object-fit: contain; }
+    .hero-toast-t { font-size: 14px; font-weight: 600; line-height: 1.4; letter-spacing: -0.005em; }
+    .hero-toast-m { font-size: 12.5px; color: rgba(242,241,246,.62); margin-top: 2px; }
+    .hero-toast-live { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #86EFAC; white-space: nowrap; align-self: start; padding-top: 2px; }
+    .hero-toast-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #22C55E; animation: ms-pulse 2s infinite; }
+    .hero-toast-body { transition: opacity .3s, transform .3s; }
+    .hero-toast-body.is-out { opacity: 0; transform: translateY(6px); }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    :root {
+      --warm: #EFEEEA;
+      --ink: #0C0A14;
+      --ink-2: #16151A;
+      --purple: #7C3AED;
+      --magenta: #C026D3;
+      --on-dark: #F2F1F6;
+      --on-dark-muted: rgba(242,241,246,0.58);
+      --line-dark: rgba(255,255,255,0.08);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --text-soft: #67646F; /* ≥4.5:1 on #FAFAF8 and #EFEEEA */
+    }
+
+    h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    :focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; border-radius: 6px; }
+
+    .sec { padding: clamp(80px, 10vw, 128px) 0 clamp(88px, 11vw, 140px); }
+    .sec-h2 {
+      font-size: clamp(30px, 3.8vw, 48px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: var(--text-dark);
+    }
+    .sec-lede {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 52ch;
+      margin-top: 18px;
+    }
+    .eyebrow + .sec-h2 { margin-top: 16px; }
+
+    .text-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14.5px; font-weight: 600; color: var(--text-dark);
+      border-bottom: 1.5px solid rgba(20,21,26,0.18);
+      padding-bottom: 3px;
+      transition: border-color .2s, gap .25s var(--ease-out);
+    }
+    .text-link:hover { border-color: var(--text-dark); gap: 12px; }
+
+    /* ═══════════════════════════════════════
+       02 · PROOF STRIP
+    ═══════════════════════════════════════ */
+    .strip { border-top: 1px solid var(--border); padding: 64px 0 64px; }
+    .strip-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .strip-badges { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; }
+    .strip-badges-lbl { font-size: 13px; color: var(--text-soft); }
+    .strip-badges-lbl strong { color: var(--text-dark); font-weight: 600; }
+    .strip-badges-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .sb { mix-blend-mode: multiply; filter: grayscale(1); opacity: .75; transition: filter .25s, opacity .25s; width: auto; object-fit: contain; }
+    .sb:hover { filter: grayscale(0); opacity: 1; }
+    .sb--t { height: 52px; }
+    .sb--w { height: 28px; max-width: 160px; }
+    .strip-stat { padding: 0 28px; border-left: 1px solid var(--border); }
+    .strip-stat:first-child { border-left: none; padding-left: 0; }
+    .strip-num {
+      font-size: clamp(36px, 4.4vw, 60px);
+      font-weight: 800; letter-spacing: -0.045em; line-height: 1;
+      color: var(--text-dark);
+    }
+    .strip-lbl { margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--text-muted); max-width: 22ch; }
+    .strip-lbl strong { color: var(--text-dark); font-weight: 600; }
+
+    /* ═══════════════════════════════════════
+       03 · FIT CHECK
+    ═══════════════════════════════════════ */
+    .fit { border-top: 1px solid var(--border); }
+    .fit-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+    .fit-copy { position: sticky; top: 120px; }
+    .fit-copy .sec-h2, .how-copy .sec-h2, .faq2-copy .sec-h2 { font-size: clamp(28px, 3vw, 40px); }
+    .fit-list { display: flex; flex-direction: column; gap: 12px; }
+    .fit-opt {
+      display: grid; grid-template-columns: 28px 1fr; gap: 18px; align-items: start;
+      width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      padding: 22px 24px;
+      transition: border-color .25s, box-shadow .25s, transform .25s var(--ease-out), background .25s;
+    }
+    .fit-opt:hover { border-color: rgba(20,21,26,0.18); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(40,20,80,.06); }
+    .fit-opt:active { transform: translateY(0) scale(.995); }
+    .fit-box {
+      width: 28px; height: 28px; border-radius: 8px;
+      border: 1.5px solid rgba(20,21,26,0.2);
+      display: grid; place-items: center;
+      transition: background .25s, border-color .25s;
+    }
+    .fit-box svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset .35s var(--ease-out) .05s; }
+    .fit-opt-t { display: block; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; }
+    .fit-opt-d { display: block; font-size: 14px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; }
+    .fit-opt[aria-pressed="true"] { border-color: rgba(124,58,237,.45); background: linear-gradient(180deg, #fff, #FBF8FF); box-shadow: 0 0 0 3px rgba(124,58,237,.08); }
+    .fit-opt[aria-pressed="true"] .fit-box { background: var(--gradient); border-color: transparent; }
+    .fit-opt[aria-pressed="true"] .fit-box svg { stroke-dashoffset: 0; }
+
+    .fit-result {
+      margin-top: 20px; border-radius: 16px; padding: 22px 24px;
+      background: var(--ink-2); color: var(--on-dark);
+      display: grid; grid-template-columns: 1fr auto; gap: 16px 24px; align-items: center;
+    }
+    .fit-meter { grid-column: 1 / -1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.1); overflow: hidden; }
+    .fit-meter span { display: block; height: 100%; width: 0%; background: var(--gradient); border-radius: 4px; transition: width .5s var(--ease-out); }
+    .fit-result-t { font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
+    .fit-result-d { font-size: 13.5px; color: var(--on-dark-muted); margin-top: 4px; line-height: 1.5; }
+    .fit-result a { font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; border-bottom: 1.5px solid rgba(255,255,255,.3); padding-bottom: 2px; transition: border-color .2s; }
+    .fit-result a:hover { border-color: #fff; }
+    .fit-result-copy { transition: opacity .2s; }
+    .fit-result.is-fit .fit-result-link {
+      background: #fff; color: var(--ink-2); border: none; padding: 12px 18px; border-radius: 10px;
+      box-shadow: 0 6px 20px -6px rgba(124,58,237,.6);
+    }
+    .fit-result.is-fit .fit-result-link:hover { background: #F3EEFF; }
+    .fit-result { transition: box-shadow .4s; }
+    .fit-result.is-fit { box-shadow: 0 0 0 1px rgba(124,58,237,.35), 0 18px 40px -16px rgba(124,58,237,.45); }
+
+    /* ═══════════════════════════════════════
+       04 · OFFERINGS SWITCHER
+    ═══════════════════════════════════════ */
+    .off { border-top: 1px solid var(--border); }
+    .off-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 56px; }
+    .off-head > div { flex: 1 1 62%; }
+    .off-head .sec-lede { margin-top: 0; max-width: 40ch; flex: 0 1 38%; }
+    .off-body { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(24px, 4vw, 56px); align-items: stretch; }
+    .off-tabs { display: flex; flex-direction: column; }
+    .off-tab {
+      position: relative; text-align: left; font: inherit; color: inherit; cursor: pointer;
+      background: none; border: none; border-top: 1px solid var(--border);
+      padding: 24px 0 24px 0; display: grid; grid-template-columns: 44px 1fr; gap: 4px 12px;
+    }
+    .off-tab:last-child { border-bottom: 1px solid var(--border); }
+    .off-tab::before {
+      content: ""; position: absolute; left: 0; top: -1px; height: 2px; width: 0;
+      background: var(--gradient); transition: width .6s var(--ease-out);
+    }
+    .off-tab[aria-selected="true"]::before { width: 100%; }
+    .off-tab-n { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--text-soft); padding-top: 6px; transition: color .25s; }
+    .off-tab-t { font-size: clamp(19px, 1.8vw, 24px); font-weight: 750; letter-spacing: -0.025em; color: var(--text-soft); transition: color .25s; }
+    .off-tab-d {
+      grid-column: 2; font-size: 14.5px; line-height: 1.6; color: var(--text-muted);
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition: max-height .45s var(--ease-out), opacity .3s, margin .3s;
+    }
+    .off-tab:hover .off-tab-t { color: var(--text-dark); }
+    .off-tab[aria-selected="true"] .off-tab-t { color: var(--text-dark); }
+    .off-tab[aria-selected="true"] .off-tab-n { color: var(--purple); }
+    .off-tab[aria-selected="true"] .off-tab-d { max-height: 160px; opacity: 1; margin-top: 8px; }
+
+    .off-stage {
+      position: relative; background: var(--warm); border-radius: 24px;
+      padding: clamp(24px, 3vw, 36px);
+      box-shadow: 0 0 0 1px rgba(20,21,26,.04), 0 12px 40px rgba(40,20,80,.06);
+      min-height: 480px; overflow: hidden;
+    }
+    .off-stage {
+      background-color: var(--warm);
+      background-image: radial-gradient(rgba(20,21,26,.075) 1px, transparent 1.2px);
+      background-size: 16px 16px;
+      background-position: 8px 8px;
+    }
+    .off-stage::before {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), inset 0 0 0 1px rgba(20,21,26,.04);
+      background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0) 28%);
+    }
+    .off-panel { position: relative; z-index: 1; display: none; }
+    .off-panel.is-active { display: block; }
+    .op-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .op-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-soft); }
+    .op-logos { display: flex; gap: 8px; flex-wrap: wrap; }
+    .op-logos img { height: 26px; width: auto; border-radius: 6px; background: #fff; padding: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .op-card { background: #fff; border-radius: 16px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(20,21,26,.05); }
+    .op-card + .op-card { margin-top: 12px; }
+    .op-card-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .op-card-h .op-label { color: var(--text-muted); }
+    .op-live { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #16A34A; }
+    .op-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #22C55E; animation: ms-pulse 2s infinite; }
+    @keyframes ms-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.45); } 50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); } }
+    .op-task { display: grid; grid-template-columns: 20px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(20,21,26,.06); font-size: 14px; }
+    .op-task:first-of-type { border-top: none; }
+    .op-check { width: 20px; height: 20px; border-radius: 6px; background: rgba(124,58,237,.1); display: grid; place-items: center; }
+    .op-check svg { width: 11px; height: 11px; stroke: var(--purple); stroke-width: 2.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .op-task-who { font-size: 12px; color: var(--text-soft); font-weight: 500; white-space: nowrap; }
+    .op-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .op-metric { background: #fff; border-radius: 14px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(20,21,26,.05); }
+    .op-metric-v { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; }
+    .op-metric-l { font-size: 12.5px; color: var(--text-soft); margin-top: 4px; line-height: 1.4; }
+    .op-metric-v.up { color: #15803D; }
+    .op-foot { margin-top: 16px; font-size: 13px; color: var(--text-soft); display: flex; gap: 8px; align-items: center; }
+    .op-foot svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 1.8; }
+
+    /* ═══════════════════════════════════════
+       05 · HOW IT WORKS (dark chapter)
+    ═══════════════════════════════════════ */
+    .dark-shell { padding: 0 24px; background: var(--bg); }
+    .how {
+      background: var(--ink); color: var(--on-dark);
+      background-image: radial-gradient(circle at 12% 0%, rgba(124,58,237,.16), transparent 45%), radial-gradient(circle at 100% 100%, rgba(192,38,211,.10), transparent 40%);
+      border-radius: 28px; position: relative; overflow: clip;
+    }
+    .how .eyebrow { color: var(--on-dark-muted); }
+    .how .sec-h2 { color: var(--on-dark); }
+    .how .sec-lede { color: var(--on-dark-muted); }
+    .how-grid { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(40px, 6vw, 96px); }
+    .how-copy { position: sticky; top: 120px; align-self: start; }
+    .how-tl { position: relative; padding-left: 48px; }
+    .how-rail { position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: var(--line-dark); border-radius: 2px; }
+    .how-rail span { position: absolute; inset: 0 0 auto 0; height: 100%; background: linear-gradient(180deg, var(--purple), var(--magenta)); transform-origin: top; transform: scaleY(1); border-radius: 2px; }
+    .how-step { position: relative; padding-bottom: 56px; }
+    .how-step:last-child { padding-bottom: 0; }
+    .how-dot {
+      position: absolute; left: -48px; top: 2px; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--ink); border: 2px solid rgba(255,255,255,.18);
+      display: grid; place-items: center; transition: border-color .3s, background .3s;
+    }
+    .how-dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.25); transition: background .3s, transform .3s; }
+    .how-step.is-on .how-dot { border-color: var(--purple); }
+    .how-step.is-on .how-dot::after { background: #fff; transform: scale(1.1); }
+    .how-when { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #B794F6; }
+    .how-step h3 { font-size: clamp(22px, 2.2vw, 28px); font-weight: 800; letter-spacing: -0.03em; margin: 8px 0 10px; color: var(--on-dark); }
+    .how-step p { font-size: 15px; line-height: 1.65; color: var(--on-dark-muted); max-width: 52ch; }
+    .how-get {
+      margin-top: 20px; display: inline-flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,.04); border: 1px solid var(--line-dark); border-radius: 14px;
+      padding: 12px 18px 12px 12px;
+    }
+    .how-get-ic { width: 36px; height: 36px; border-radius: 10px; background: rgba(124,58,237,.18); display: grid; place-items: center; flex-shrink: 0; }
+    .how-get-ic svg { width: 17px; height: 17px; stroke: #C4B5FD; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .how-get-l { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(242,241,246,.55); }
+    .how-get-t { font-size: 14px; font-weight: 600; color: var(--on-dark); margin-top: 2px; }
+
+    /* ═══════════════════════════════════════
+       06 · COMPARISON
+    ═══════════════════════════════════════ */
+    .cmp-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+    .cmp-head .sec-lede { margin-left: auto; margin-right: auto; }
+    .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 12px 4px 4px; }
+    .cmp { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+    .cmp th, .cmp td { padding: 20px 24px; text-align: left; vertical-align: top; font-size: 14.5px; line-height: 1.5; }
+    .cmp thead th { font-size: 13px; font-weight: 600; color: var(--text-muted); padding-bottom: 18px; }
+    .cmp thead th .cmp-col-t { display: block; font-size: 18px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-dark); margin-top: 4px; }
+    .cmp tbody th { font-weight: 600; color: var(--text-dark); width: 22%; }
+    .cmp tbody td { color: var(--text-muted); }
+    .cmp tbody tr td, .cmp tbody tr th { border-top: 1px solid var(--border); }
+    .cmp tbody tr { transition: background .2s; }
+    .cmp tbody tr:hover th, .cmp tbody tr:hover td:not(.cmp-h) { background: rgba(20,21,26,.02); }
+    .cmp .cmp-h { background: #fff; color: var(--text-dark); font-weight: 500; position: relative; border-left: 1.5px solid rgba(124,58,237,.35); border-right: 1.5px solid rgba(124,58,237,.35); }
+    .cmp thead .cmp-h { border-top: 1.5px solid rgba(124,58,237,.35); border-radius: 18px 18px 0 0; padding-top: 22px; }
+    .cmp thead .cmp-h .cmp-col-t { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .cmp tbody tr:last-child .cmp-h { border-bottom: 1.5px solid rgba(124,58,237,.35); border-radius: 0 0 18px 18px; }
+    .cmp-table-wrap { position: relative; }
+    .cmp .cmp-h { box-shadow: 0 0 0 0 transparent; }
+    .cmp-mark { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; margin-right: 10px; vertical-align: -4px; }
+    .cmp-mark svg { width: 11px; height: 11px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .cmp-mark--y { background: rgba(124,58,237,.12); }
+    .cmp-mark--y svg { stroke: var(--purple); }
+    .cmp-mark--n { background: rgba(20,21,26,.06); }
+    .cmp-mark--n svg { stroke: var(--text-soft); }
+    .cmp td:has(.cmp-mark) { position: relative; padding-left: 56px; }
+    .cmp td .cmp-mark { position: absolute; left: 24px; top: 21px; margin: 0; }
+    .cmp-foot { text-align: center; margin-top: 40px; }
+
+    /* ═══════════════════════════════════════
+       07 · PROOF (dark chapter)
+    ═══════════════════════════════════════ */
+    .proof2 { background: var(--ink-2); color: var(--on-dark); border-radius: 28px; overflow: hidden; }
+    .proof2 .eyebrow { color: var(--on-dark-muted); }
+    .proof2-grid { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(40px, 6vw, 88px); align-items: center; }
+    .proof2-h { font-size: clamp(30px, 3.8vw, 48px); font-weight: 800; line-height: 1.08; letter-spacing: -0.035em; margin: 16px 0 28px; }
+    .proof2-q { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.5; letter-spacing: -0.015em; color: rgba(242,241,246,.9); font-weight: 500; max-width: 34ch; }
+    .proof2-who { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+    .proof2-logo { height: 34px; width: 34px; border-radius: 10px; background: #fff; display: grid; place-items: center; padding: 6px; }
+    .proof2-logo img { width: 100%; height: auto; }
+    .proof2-logo--wide { width: auto; padding: 6px 10px; }
+    .proof2-logo--wide img { width: auto; height: 14px; }
+    .proof2-all { display: inline-flex; margin-top: clamp(28px, 4vw, 40px); font-size: 15px; font-weight: 600; color: #fff; opacity: .85; transition: opacity .2s; }
+    .proof2-all:hover { opacity: 1; }
+    .proof2-name { font-size: 14px; font-weight: 600; }
+    .proof2-role { font-size: 13px; color: var(--on-dark-muted); }
+    .proof2-link { display: inline-flex; gap: 8px; margin-top: 32px; font-size: 14px; font-weight: 600; color: #fff; border-bottom: 1.5px solid rgba(255,255,255,.25); padding-bottom: 3px; transition: border-color .2s, gap .25s var(--ease-out); }
+    .proof2-link:hover { border-color: #fff; gap: 12px; }
+    .proof2-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-dark); border-radius: 20px; overflow: hidden; border: 1px solid var(--line-dark); }
+    .proof2-n { background: var(--ink-2); padding: 28px 26px 30px; }
+    .proof2-v { font-size: clamp(34px, 3.6vw, 48px); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+    .proof2-n:first-child .proof2-v { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .proof2-l { font-size: 13.5px; line-height: 1.5; color: var(--on-dark-muted); margin-top: 12px; max-width: 22ch; }
+    .proof2-badge { margin-top: 20px; display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--on-dark-muted); }
+    .proof2-badge img { height: 30px; width: auto; border-radius: 6px; background: #fff; padding: 2px 4px; }
+
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: clamp(56px, 7vw, 88px); padding-top: clamp(40px, 5vw, 56px); border-top: 1px solid var(--line-dark); }
+    .quote { padding: 4px 0; }
+    .quote p { font-size: 16px; line-height: 1.55; color: rgba(242,241,246,.86); letter-spacing: -0.01em; }
+    .quote p::before { content: "\201C"; display: block; font-size: 40px; line-height: .6; height: 18px; color: #A78BFA; font-weight: 800; }
+    .quote span { display: block; margin-top: 16px; font-size: 13px; color: var(--on-dark-muted); }
+
+    /* ═══════════════════════════════════════
+       08 · FAQ
+    ═══════════════════════════════════════ */
+    .faq2-grid { display: grid; grid-template-columns: 4fr 7fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+    .faq2-copy { position: sticky; top: 120px; }
+    .faq2-copy .text-link { margin-top: 28px; }
+    .faq2-item { border-top: 1px solid var(--border); }
+    .faq2-item:last-child { border-bottom: 1px solid var(--border); }
+    .faq2-q {
+      width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+      padding: 24px 0; background: none; border: none; cursor: pointer; text-align: left;
+      font: inherit; font-size: 17px; font-weight: 650; letter-spacing: -0.015em; color: var(--text-dark);
+    }
+    .faq2-ic { width: 32px; height: 32px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; flex-shrink: 0; transition: background .25s, border-color .25s, transform .35s var(--ease-out); }
+    .faq2-ic svg { width: 12px; height: 12px; stroke: var(--text-dark); stroke-width: 2; fill: none; stroke-linecap: round; }
+    .faq2-q:hover .faq2-ic { background: #fff; border-color: rgba(20,21,26,.16); }
+    .faq2-q[aria-expanded="true"] .faq2-ic { transform: rotate(45deg); background: var(--ink-2); border-color: var(--ink-2); }
+    .faq2-q[aria-expanded="true"] .faq2-ic svg { stroke: #fff; }
+    .faq2-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease-out); }
+    .faq2-a > div { overflow: hidden; }
+    .faq2-a p { font-size: 15px; line-height: 1.7; color: var(--text-muted); max-width: 60ch; padding: 0 56px 26px 0; }
+    .faq2-q[aria-expanded="true"] + .faq2-a { grid-template-rows: 1fr; }
+
+    .cta-sub { margin: -16px 0 32px; font-size: 14.5px; color: var(--on-dark-muted); }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .blk { display: block; }
+    .off-panel-desc { margin: 0 0 20px; color: var(--text-soft); }
+    .op-metrics-row { margin-top: 12px; }
+
+    /* ═══════════════════════════════════════
+       CLOSING CTA
+    ═══════════════════════════════════════ */
+    .cta-shell {
+      padding: 0 24px 24px;
+      background: var(--bg);
+    }
+
+    .cta-dark {
+      background: #0C0A14;
+      background-image: radial-gradient(circle at 90% 0%, rgba(124,58,237,.15), transparent 52%);
+      border-radius: 22px;
+      padding: 96px 40px;
+      text-align: center;
+    }
+
+    .cta-inner { max-width: 580px; margin: 0 auto; }
+
+    .cta-dark h2 {
+      font-size: clamp(26px, 3.6vw, 40px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #F2F1F6;
+      margin-bottom: 32px;
+    }
+
+    .cta-dark-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      display: inline-block;
+      background: #fff;
+      color: var(--text-dark);
+      padding: 14px 28px;
+      border-radius: var(--radius-btn);
+      font-size: 15px;
+      font-weight: 600;
+      transition: opacity 0.15s;
+    }
+
+    .btn-white:hover { opacity: 0.9; }
+
+    .btn-ghost {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(242,241,246,0.6);
+      padding: 14px 4px;
+      transition: color 0.15s;
+    }
+
+    .btn-ghost:hover { color: rgba(242,241,246,0.9); }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+    }
+
+    .footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-left img { height: 24px; display: block; }
+
+    .footer-left span {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-right a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.15s;
+    }
+
+    .footer-right a:hover { color: var(--text-dark); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero .container { grid-template-columns: minmax(0, 1fr); min-height: auto; gap: 48px; padding-top: 48px; padding-bottom: 72px; }
+      .hero-media { max-width: 640px; width: 100%; margin: 0 auto; }
+      .hero-photo { aspect-ratio: 4 / 3.4; }
+      .hero-chip--pod { left: -12px; }
+      .hero-chip--result { right: -12px; }
+
+      .strip-stats { grid-template-columns: repeat(2, 1fr); gap: 36px 0; }
+      .strip-stat:nth-child(3) { border-left: none; padding-left: 0; }
+
+      .fit-grid, .how-grid, .faq2-grid { grid-template-columns: 1fr; gap: 40px; }
+      .fit-copy, .how-copy, .faq2-copy { position: static; }
+
+      .off-head { flex-direction: column; align-items: start; gap: 16px; }
+      .off-body { grid-template-columns: 1fr; }
+      .off-tabs { flex-direction: row; overflow-x: auto; gap: 8px; scrollbar-width: none; }
+      .off-tabs::-webkit-scrollbar { display: none; }
+      .off-tab { border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; grid-template-columns: auto auto; flex-shrink: 0; background: #fff; }
+      .off-tab:last-child { border-bottom: 1px solid var(--border); }
+      .off-tab::before { display: none; }
+      .off-tab-t { font-size: 15px; }
+      .off-tab-n { padding-top: 2px; }
+      .off-tab-d { display: none; }
+      .off-tab[aria-selected="true"] { background: var(--ink-2); border-color: var(--ink-2); }
+      .off-tab[aria-selected="true"] .off-tab-t { color: #fff; }
+      .off-tab[aria-selected="true"] .off-tab-n { color: #C4B5FD; }
+      .off-panel-desc { display: block !important; }
+      .off-stage { min-height: 0; }
+
+      .proof2-grid { grid-template-columns: 1fr; }
+      .quotes { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    @media (min-width: 1025px) {
+      .off-panel-desc { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 60px; }
+      .hero .container { padding-top: 32px; gap: 40px; }
+      .hero-trust { margin-top: 36px; }
+      .hero-logos-track { gap: 28px; }
+      .hero-logos img { height: 22px; }
+      .hero-logos img.lg { height: 28px; }
+      .hero-photo { aspect-ratio: 4 / 4.6; border-radius: 20px; }
+      .hero-chip--pod { top: 14px; left: 10px; padding: 10px 14px 10px 10px; gap: 10px; }
+      .hero-av { width: 28px; height: 28px; font-size: 10px; margin-left: -8px; }
+      .hero-chip-t { font-size: 13px; } .hero-chip-d { font-size: 11.5px; }
+      .hero-chip--result { top: auto; bottom: 112px; right: 10px; min-width: 0; padding: 12px 14px; }
+      .hero-chip-v { font-size: 22px; } .hero-spark { width: 100px; height: 26px; }
+      .hero-toast { left: 10px; right: 10px; bottom: 10px; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px; }
+      .hero-toast-logo { width: 34px; height: 34px; } .hero-toast-logo img { width: 24px; height: 24px; }
+      .hero-toast-live { display: none; }
+      .hero-toast-t { font-size: 13px; }
+      .platform-row img { height: 22px; }
+
+      .strip-stat { padding: 0 16px; }
+      .strip-stat:nth-child(odd) { border-left: none; padding-left: 0; }
+
+      .fit-opt { padding: 18px; gap: 14px; }
+      .fit-result { grid-template-columns: 1fr; }
+      .fit-result a { justify-self: start; }
+
+      .op-metrics { grid-template-columns: 1fr 1fr; }
+      .op-metric:last-child { grid-column: 1 / -1; }
+      .op-task { grid-template-columns: 20px 1fr; }
+      .op-task-who { display: none; }
+
+      .dark-shell { padding: 0 12px; }
+      .how, .proof2 { border-radius: 20px; }
+      .how-tl { padding-left: 40px; }
+      .how-dot { left: -40px; }
+      .how-get { align-items: flex-start; }
+
+      .proof2-n { padding: 22px 18px 24px; }
+      .cmp-scroll { overflow: visible; padding: 0; }
+      .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: 100%; min-width: 0; }
+      .cmp thead { display: none; }
+      .cmp tbody tr { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
+      .cmp tbody tr th, .cmp tbody tr td { border-top: none; }
+      .cmp tbody th { width: 100%; padding: 18px 18px 6px; font-size: 15px; }
+      .cmp td { padding: 6px 18px 10px; font-size: 14px; }
+      .cmp td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 2px; }
+      .cmp td.cmp-h { order: -1; margin: 0 12px 6px; width: auto; border: 1.5px solid rgba(124,58,237,.35) !important; border-radius: 12px !important; background: #FBF8FF; padding: 12px 14px 12px 46px; }
+      .cmp td.cmp-h::before { color: var(--purple); }
+      .cmp tbody th { order: -2; }
+      .cmp td:has(.cmp-mark) { padding-left: 46px; }
+      .cmp td .cmp-mark { left: 16px; top: 14px; }
+      .cmp td:not(.cmp-h):has(.cmp-mark) { padding-left: 18px; }
+      .cmp td:not(.cmp-h) .cmp-mark { display: none; }
+      .cmp tbody tr:hover th, .cmp tbody tr:hover td:not(.cmp-h) { background: none; }
+
+
+      .faq2-q { font-size: 16px; padding: 20px 0; }
+      .faq2-a p { padding-right: 0; }
+
+      .cta-dark { border-radius: 16px; padding: 64px 24px; }
+      .cta-shell { padding: 0 12px 12px; }
+
+      .nav-links { display: none; }
+      .nav-login { display: none; }
+
+      .footer .container { flex-direction: column; gap: 20px; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .op-live::before { animation: none; }
+      .hero-logos-track { animation: none; flex-wrap: wrap; width: auto; row-gap: 16px; }
+      .hero-logos-track img[aria-hidden] { display: none; }
+      .fit-opt, .fit-opt:hover, .fit-opt:active { transform: none; }
+      .off-tab-d, .faq2-a, .fit-meter span, .off-tab::before { transition-duration: .15s; }
+    }
+  
+    /* Mobile menu */
+    .nav-burger { display: none; width: 44px; height: 44px; margin-left: 8px; border: none; background: none; cursor: pointer; border-radius: 10px; position: relative; }
+    .nav-burger span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: var(--text-dark); transition: transform .3s cubic-bezier(0.22,1,0.36,1), top .3s; }
+    .nav-burger span:first-child { top: 17px; } .nav-burger span:last-child { top: 25px; }
+    .nav-burger[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
+    .nav-burger[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
+    .mob-nav { position: fixed; z-index: 999; top: 60px; left: 0; right: 0; bottom: 0; background: #FAFAF8; padding: 24px 24px 32px; display: flex; flex-direction: column; overflow-y: auto; }
+    .mob-nav[hidden] { display: none; }
+    .mob-nav ul { list-style: none; }
+    .mob-nav li { border-bottom: 1px solid rgba(20,21,26,.08); }
+    .mob-nav li a { display: flex; justify-content: space-between; align-items: center; padding: 18px 2px; font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: #16151A; text-decoration: none; }
+    .mob-nav li a::after { content: "→"; font-weight: 500; color: #9C99A8; }
+    .mob-nav-actions { margin-top: auto; padding-top: 32px; display: grid; gap: 10px; }
+    .mob-nav-actions a { display: block; text-align: center; padding: 15px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
+    .mob-nav-actions .m-login { border: 1.5px solid rgba(20,21,26,.15); color: #16151A; }
+    .mob-nav-actions .m-cta { background: #16151A; color: #fff; }
+    .mob-nav li { opacity: 0; transform: translateY(8px); transition: opacity .35s, transform .35s cubic-bezier(0.22,1,0.36,1); }
+    .mob-nav.is-open li { opacity: 1; transform: none; }
+    .mob-nav.is-open li:nth-child(2) { transition-delay: .04s; } .mob-nav.is-open li:nth-child(3) { transition-delay: .08s; } .mob-nav.is-open li:nth-child(4) { transition-delay: .12s; } .mob-nav.is-open li:nth-child(5) { transition-delay: .16s; } .mob-nav.is-open li:nth-child(6) { transition-delay: .2s; }
+    body.menu-open { overflow: hidden; }
+    @media (max-width: 768px) { .nav-burger { display: block; } .nav-cta { padding: 9px 14px; } }
+    @media (prefers-reduced-motion: reduce) { .mob-nav li, .nav-burger span { transition: none; } }
+  
+    /* Trust strip: badges + ad products (matches homepage-v2-us and India Managed Service) */
+    .strip .tbadges { margin-top: 40px; }
+    .tbadges-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .tbadge { height: 80px; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px var(--border); display: grid; place-items: center; padding: 10px 14px; transition: transform .3s var(--ease-out), box-shadow .3s; }
+    .tbadge:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(20,21,26,.12), 0 16px 32px -16px rgba(40,20,80,.3); }
+    .tbadge img { max-height: 56px; max-width: 100%; object-fit: contain; mix-blend-mode: multiply; }
+    .strip .plats { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .plats-lbl { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text-soft); }
+    .plats-lbl strong { color: var(--text-dark); font-weight: 600; }
+    .plats-amz { width: 28px; height: 28px; object-fit: contain; border-radius: 7px; background: #fff; padding: 3px; box-shadow: 0 0 0 1px var(--border); }
+    .prods { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 18px; }
+    .prods span { display: grid; place-items: center; text-align: center; min-height: 52px; padding: 10px 14px; font-size: 14px; font-weight: 600; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px var(--border); }
+    @media (max-width: 1024px) { .tbadges-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 900px) { .prods { grid-template-columns: repeat(2, 1fr); gap: 10px; } .prods span:last-child { grid-column: 1 / -1; } .prods span { font-size: 13.5px; min-height: 46px; } }
+    @media (max-width: 768px) { .tbadges-row { grid-template-columns: 1fr 1fr; } .tbadge { height: 70px; } .tbadge img { max-height: 46px; } }
+  /* ═══ Shared close band + footer ═══ */
+    .close3 { background: var(--ink); background-image: radial-gradient(circle at 90% 0%, rgba(124,58,237,.2), transparent 50%); border-radius: 22px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 64px) 32px; color: var(--on-dark); }
+    .close3-in { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px 56px; align-items: end; }
+    .close3-copy h2 { font-size: clamp(30px, 3.8vw, 50px); font-weight: 800; letter-spacing: -.035em; line-height: 1.06; text-wrap: balance; }
+    .close3-copy p { font-size: 16px; line-height: 1.6; color: var(--on-dark-muted); margin-top: 18px; max-width: 46ch; }
+    .close3-act { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .close3-act .btn-white { display: inline-flex; gap: 8px; }
+    .close3-ask { font-size: 15px; font-weight: 600; color: var(--on-dark); padding: 12px 2px; border-bottom: 1px solid rgba(242,241,246,.3); transition: border-color .2s; }
+    .close3-ask:hover { border-color: #fff; }
+    .close3-foot { max-width: 1080px; margin: clamp(40px, 5vw, 64px) auto 0; padding-top: 22px; border-top: 1px solid var(--line-dark); display: flex; flex-wrap: wrap; gap: 10px 32px; font-size: 13.5px; color: var(--on-dark-muted); }
+    .close3-foot a { color: var(--on-dark); font-weight: 600; }
+    .close3-foot a:hover { text-decoration: underline; }
+
+    .ft2 { background: var(--ink); color: rgba(242,241,246,.7); padding: 72px 0 36px; margin-top: 24px; }
+    .ft2-cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+    .ft2-logo { height: 26px; margin-bottom: 18px; }
+    .ft2-about { font-size: 14px; line-height: 1.65; max-width: 40ch; }
+    .ft2-h { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(242,241,246,.45); margin-bottom: 16px; }
+    .ft2 ul { list-style: none; display: grid; gap: 10px; }
+    .ft2 a { font-size: 14px; transition: color .2s; }
+    .ft2 a:hover { color: #fff; }
+    .ft2-soon { font-size: 11px; letter-spacing: .08em; opacity: .55; margin-left: 4px; }
+    .ft2-reach { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--line-dark); }
+    .ft2-office:nth-child(2) { grid-column: span 2; }
+    .ft2-office { display: grid; gap: 8px; align-content: start; font-size: 14px; line-height: 1.6; }
+    .ft2-office .ft2-h { margin-bottom: 6px; }
+    .ft2-office a { color: var(--on-dark); font-weight: 500; justify-self: start; }
+    .ft2-social { display: flex; gap: 10px; margin-top: 6px; }
+    .ft2-social a { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line-dark); display: grid; place-items: center; transition: background .2s, border-color .2s; }
+    .ft2-social a:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); }
+    .ft2-social svg { width: 16px; height: 16px; fill: currentColor; }
+    .ft2-bottom { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line-dark); font-size: 13px; }
+    .ft2-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .ft2-badges span { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line-dark); }
+    @media (max-width: 1024px) { .close3-in { grid-template-columns: 1fr; align-items: start; } .ft2-cols { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) { .ft2-cols, .ft2-reach { grid-template-columns: 1fr; gap: 28px; } .ft2-office:nth-child(2) { grid-column: auto; } .close3-foot { flex-direction: column; } }
+  
+    /* ═══ Nav from homepage v2 ═══ */
+    /* Mobile menu */
+    .nav-burger { display: none; width: 44px; height: 44px; margin-left: 8px; border: none; background: none; cursor: pointer; border-radius: 10px; position: relative; }
+    .nav-burger span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: var(--text-dark); transition: transform .3s cubic-bezier(0.22,1,0.36,1), top .3s; }
+    .nav-burger span:first-child { top: 17px; } .nav-burger span:last-child { top: 25px; }
+    .nav-burger[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
+    .nav-burger[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
+    .mob-nav { position: fixed; z-index: 999; top: 60px; left: 0; right: 0; bottom: 0; background: #FAFAF8; padding: 24px 24px 32px; display: flex; flex-direction: column; overflow-y: auto; }
+    .mob-nav[hidden] { display: none; }
+    .mob-nav ul { list-style: none; }
+    .mob-nav li { border-bottom: 1px solid rgba(20,21,26,.08); }
+    .mob-nav li a { display: flex; justify-content: space-between; align-items: center; padding: 18px 2px; font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: #16151A; text-decoration: none; }
+    .mob-nav li a::after { content: "→"; font-weight: 500; color: #9C99A8; }
+    .mob-nav-actions { margin-top: auto; padding-top: 32px; display: grid; gap: 10px; }
+    .mob-nav-actions a { display: block; text-align: center; padding: 15px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
+    .mob-nav-actions .m-login { border: 1.5px solid rgba(20,21,26,.15); color: #16151A; }
+    .mob-nav-actions .m-cta { background: #16151A; color: #fff; }
+    .mob-nav li { opacity: 0; transform: translateY(8px); transition: opacity .35s, transform .35s cubic-bezier(0.22,1,0.36,1); }
+    .mob-nav.is-open li { opacity: 1; transform: none; }
+    .mob-nav.is-open li:nth-child(2) { transition-delay: .04s; } .mob-nav.is-open li:nth-child(3) { transition-delay: .08s; } .mob-nav.is-open li:nth-child(4) { transition-delay: .12s; } .mob-nav.is-open li:nth-child(5) { transition-delay: .16s; } .mob-nav.is-open li:nth-child(6) { transition-delay: .2s; }
+    body.menu-open { overflow: hidden; }
+    @media (max-width: 768px) { .nav-burger { display: block; } .nav-cta { padding: 9px 14px; } }
+    @media (prefers-reduced-motion: reduce) { .mob-nav li, .nav-burger span { transition: none; } }
+  
+    /* ═══ Navigation: mega menus ═══ */
+    .nav { gap: 8px; }
+    .nav-menu { display: flex; align-items: center; gap: 2px; list-style: none; margin-right: 16px; }
+    .nav-trigger, .nav-link { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 14px; font-weight: 500; color: var(--text-dark); background: none; border: none; cursor: pointer; padding: 8px 12px; border-radius: 8px; transition: background .15s; text-decoration: none; }
+    .nav-trigger:hover, .nav-link:hover, .nav-trigger[aria-expanded="true"] { background: rgba(20,21,26,.06); }
+    .chev { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s cubic-bezier(0.22,1,0.36,1); }
+    .nav-trigger[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .mm-layer { position: absolute; top: 100%; left: 0; right: 0; display: flex; justify-content: center; pointer-events: none; padding: 0 clamp(16px, 4vw, 56px); }
+    .mm-panel { pointer-events: auto; width: min(1080px, 100%); margin-top: 8px; background: #fff; border-radius: 20px; box-shadow: 0 0 0 1px rgba(20,21,26,.07), 0 28px 60px -20px rgba(40,20,80,.28); padding: 20px; opacity: 0; transform: translateY(-6px); transition: opacity .22s, transform .3s cubic-bezier(0.22,1,0.36,1); }
+    .mm-panel.is-open { opacity: 1; transform: none; }
+    .mm-panel--sm { width: min(760px, 100%); }
+    .mm-scrim { position: fixed; inset: 60px 0 0; background: rgba(12,10,20,.18); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 990; }
+    .mm-scrim.is-on { opacity: 1; }
+
+    .mm-grid { display: grid; gap: 16px; }
+    .mm-grid--mkt { grid-template-columns: 1fr 1fr 1fr 1.05fr; }
+    .mm-grid--svc { grid-template-columns: 1.9fr 1fr; }
+    .mm-grid--work { grid-template-columns: 1.2fr 1fr; }
+    .mm-col { padding: 8px; }
+    .mm-col-h { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); padding: 6px 8px 10px; border-bottom: 1px solid var(--border); margin-bottom: 6px; border-radius: 6px; transition: color .15s; }
+    .mm-col-h span { opacity: 0; transform: translateX(-4px); transition: opacity .2s, transform .2s; }
+    .mm-col-h:hover { color: var(--text-dark); } .mm-col-h:hover span { opacity: 1; transform: none; }
+    .mm-plat { display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500; color: var(--text-dark); padding: 7px 8px; border-radius: 9px; transition: background .15s; }
+    .mm-plat:hover { background: #F4F2EE; }
+    .mm-plat img { width: 26px; height: 26px; object-fit: contain; border-radius: 7px; background: #fff; padding: 2px; box-shadow: 0 0 0 1px var(--border); }
+
+    .mm-list { display: grid; gap: 4px; align-content: start; }
+    .mm-list--2 { grid-template-columns: 1fr 1fr; }
+    .mm-item { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; padding: 12px; border-radius: 12px; transition: background .15s; color: var(--text-dark); }
+    .mm-item:hover { background: #F4F2EE; }
+    .mm-item b { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 650; letter-spacing: -.01em; }
+    .mm-item > span > span { display: block; font-size: 13px; color: var(--text-soft); line-height: 1.45; margin-top: 3px; }
+    .mm-ic { width: 40px; height: 40px; border-radius: 11px; background: #F4F2EE; display: grid; place-items: center; transition: background .15s; }
+    .mm-ic svg { width: 20px; height: 20px; fill: none; stroke: #5B21B6; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .mm-item:hover .mm-ic { background: #fff; box-shadow: 0 0 0 1px var(--border); }
+    .mm-tag { font-style: normal; font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #6D28D9; background: rgba(124,58,237,.1); padding: 3px 6px; border-radius: 5px; }
+
+    .mm-feature { display: flex; flex-direction: column; gap: 6px; padding: 20px; border-radius: 14px; background: #F4F2EE; background-image: radial-gradient(rgba(20,21,26,.06) 1px, transparent 1.2px); background-size: 14px 14px; color: var(--text-dark); transition: transform .25s cubic-bezier(0.22,1,0.36,1); }
+    a.mm-feature:hover { transform: translateY(-2px); }
+    .mm-feature-k { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); }
+    .mm-feature-t { font-size: 18px; font-weight: 750; letter-spacing: -.02em; line-height: 1.25; }
+    .mm-feature-v { font-size: 40px; font-weight: 800; letter-spacing: -.045em; line-height: 1; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .mm-feature-d { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+    .mm-feature-cta { margin-top: auto; padding-top: 10px; font-size: 13.5px; font-weight: 600; color: var(--text-dark); }
+    .mm-feature--dark { background: var(--ink-2); background-image: radial-gradient(circle at 100% 0%, rgba(124,58,237,.35), transparent 60%); color: #fff; }
+    .mm-feature--dark .mm-feature-k { color: #C4B5FD; }
+    .mm-feature--dark .mm-feature-cta { color: #fff; }
+
+    /* Mobile accordions */
+    .mob-nav .mob-acc-btn, .mob-nav li a.mob-top { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 2px; font: inherit; font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: #16151A; background: none; border: none; cursor: pointer; text-align: left; text-decoration: none; }
+    .mob-nav li a.mob-top::after { content: "→"; font-weight: 500; color: #9C99A8; }
+    .mob-acc-ic { position: relative; width: 16px; height: 16px; }
+    .mob-acc-ic::before, .mob-acc-ic::after { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; border-radius: 2px; background: #9C99A8; transition: transform .25s; }
+    .mob-acc-ic::after { transform: rotate(90deg); }
+    .mob-acc-btn[aria-expanded="true"] .mob-acc-ic::after { transform: rotate(0); }
+    .mob-acc-body { padding: 0 0 16px; }
+    .mob-group { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); margin: 12px 0 8px; }
+    .mob-plats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .mob-nav .mob-plats a { display: flex; justify-content: flex-start; align-items: center; gap: 8px; letter-spacing: 0; font-size: 14px; font-weight: 500; color: #16151A; padding: 8px; border-radius: 10px; background: #fff; box-shadow: 0 0 0 1px var(--border); }
+    .mob-plats img { width: 22px; height: 22px; object-fit: contain; }
+    .mob-nav .mob-link { display: flex; justify-content: flex-start; align-items: center; gap: 8px; letter-spacing: 0; font-size: 16px; font-weight: 600; color: #16151A; padding: 12px 4px; border-top: 1px solid var(--border); }
+    .mob-nav .mob-link::after, .mob-nav .mob-plats a::after { content: none; }
+
+    @media (max-width: 1100px) { .mm-grid--mkt { grid-template-columns: 1fr 1fr 1fr; } .mm-grid--mkt .mm-feature { grid-column: 1 / -1; } }
+    @media (max-width: 768px) { .nav-menu, .nav-login, .mm-layer, .mm-scrim { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .mm-panel, .chev, .mm-scrim { transition: none; } }
+  
+
+  </style>
+</head>
+<body>
+
+    <nav class="nav" aria-label="Main">
+    <div class="nav-left">
+      <a href="../homepage-v2-us/" aria-label="Hector home"><img src="../hector-website-revamp/public/assets/logos/hector-light-bg.svg" alt="Hector" /></a>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false" aria-controls="mm-services">Services<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button></li>
+      <li class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false" aria-controls="mm-work">Our work<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button></li>
+      <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="../contact-us/">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="nav-login">Login</a>
+      <a href="../book-a-demo-us/" class="nav-cta">Book a demo</a>
+    </div>
+    <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mob-nav"><span></span><span></span></button>
+    <div class="mm-layer">
+        <div class="mm-panel" id="mm-services" hidden>
+          <div class="mm-grid mm-grid--svc">
+            <div class="mm-list mm-list--2">
+            <a class="mm-item" href="#"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4.5h14v9H3z"/><path d="M7 16.5h6M10 13.5v3"/><path d="M6 10.5l2.5-2.5 2 2 3.5-3.5"/></svg></span><span><b>Amazon Ads platform</b><span>Run Sponsored Ads yourself, with automation built in</span></span></a>
+            <a class="mm-item" href="../dsp-amc-us/"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><circle cx="10" cy="10" r="3"/><path d="M10 1.5v3M10 15.5v3M1.5 10h3M15.5 10h3"/></svg></span><span><b>DSP & AMC</b><span>Create demand off search and prove what worked</span></span></a>
+            <a class="mm-item" href="../managed-service-us/"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="7" cy="7" r="2.5"/><circle cx="13.5" cy="7.5" r="2"/><path d="M2.5 16c.6-2.6 2.4-4 4.5-4s3.9 1.4 4.5 4M11.5 12.3c.6-.2 1.3-.3 2-.3 1.8 0 3.3 1.2 3.8 3.5"/></svg></span><span><b>Managed Service</b><span>A dedicated team runs your ads for you</span></span></a>
+            <a class="mm-item" href="#"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5.5h12a1.5 1.5 0 011.5 1.5v6a1.5 1.5 0 01-1.5 1.5H9l-3.5 2.5V14.5H4A1.5 1.5 0 012.5 13V7A1.5 1.5 0 014 5.5z"/><path d="M6.5 10h.01M10 10h.01M13.5 10h.01"/></svg></span><span><b>Hector MCP</b><span>Ask your ad data anything, then act on it</span></span></a>
+            <a class="mm-item" href="#"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><ellipse cx="10" cy="5" rx="6" ry="2.5"/><path d="M4 5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5"/><path d="M4 10v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/></svg></span><span><b>Nexus <em class="mm-tag">Coming</em></b><span>Own your commerce data, AI-ready</span></span></a>
+            </div>
+            <a class="mm-feature" href="../managed-service-us/">
+              <span class="mm-feature-k">Most brands start here</span>
+              <span class="mm-feature-t">Platform + people, in one team</span>
+              <span class="mm-feature-d">The people who built the platform run your ads, on it.</span>
+              <span class="mm-feature-cta">How Managed Service works →</span>
+            </a>
+          </div>
+        </div>
+        <div class="mm-panel mm-panel--sm" id="mm-work" hidden>
+          <div class="mm-grid mm-grid--work">
+            <div class="mm-list">
+            <a class="mm-item" href="../case-studies-us/"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 6.5h13v10h-13z"/><path d="M7.5 6.5V4.5h5v2"/><path d="M3.5 10.5h13"/></svg></span><span><b>Case studies</b><span>Results by brand, platform and goal</span></span></a>
+            <a class="mm-item" href="../homepage-v2-us/#testimonials"><span class="mm-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 14.5V10a4 4 0 014-4M12 14.5V10a4 4 0 014-4"/><path d="M4 14.5h3.5v-4H4M12 14.5h3.5v-4H12"/></svg></span><span><b>Testimonials</b><span>Hear it from the brands we work with</span></span></a>
+            </div>
+            <a class="mm-feature mm-feature--proof" href="../homepage-v2-us/#t-california-design">
+              <span class="mm-feature-k">In their words</span>
+              <span class="mm-feature-t">&ldquo;A good team that comes with the tool.&rdquo;</span>
+              <span class="mm-feature-d">Deepak Mehrotra, Founder, California Design Den</span>
+              <span class="mm-feature-cta">Watch Deepak&rsquo;s video →</span>
+            </a>
+          </div>
+        </div>
+    </div>
+  </nav>
+  <div class="mm-scrim" aria-hidden="true"></div>
+  <div class="mob-nav" id="mob-nav" hidden>
+    <ul>
+      <li class="mob-acc"><button type="button" class="mob-acc-btn" aria-expanded="false">Services<span class="mob-acc-ic" aria-hidden="true"></span></button><div class="mob-acc-body" hidden><a class="mob-link" href="#">Amazon Ads platform</a><a class="mob-link" href="../dsp-amc-us/">DSP & AMC</a><a class="mob-link" href="../managed-service-us/">Managed Service</a><a class="mob-link" href="#">Hector MCP</a><a class="mob-link" href="#">Nexus <em class=mm-tag>Coming</em></a></div></li>
+      <li class="mob-acc"><button type="button" class="mob-acc-btn" aria-expanded="false">Our work<span class="mob-acc-ic" aria-hidden="true"></span></button><div class="mob-acc-body" hidden><a class="mob-link" href="../case-studies-us/">Case studies</a><a class="mob-link" href="#proof">Testimonials</a></div></li>
+      <li><a class="mob-top" href="#">About</a></li>
+      <li><a class="mob-top" href="../contact-us/">Contact</a></li>
+    </ul>
+    <div class="mob-nav-actions"><a href="#" class="m-login">Login</a><a href="../book-a-demo-us/" class="m-cta">Book a demo</a></div>
+  </div>
+
+    <section class="hero">
+    <div class="container">
+      <div class="hero-left">
+        <p class="eyebrow" data-hero>Amazon Ads &amp; DSP · Managed service</p>
+        <h1 data-hero>The team that built the platform <span class="gradient">runs your ads.</span></h1>
+        <p class="hero-sub" data-hero>A dedicated pod runs your Amazon Ads, DSP and AMC on our own platform. You read one report a week.</p>
+        <div class="hero-ctas" data-hero>
+          <a href="../book-a-demo-us/" class="btn-primary">Talk to our team <span class="arr" aria-hidden="true">→</span></a>
+          <a href="#how-it-works" class="btn-secondary">See how it works</a>
+        </div>
+        <div class="hero-trust" data-hero>
+          <p class="hero-trust-lbl">Trusted by <strong>220+ brands</strong>, including</p>
+          <div class="hero-logos">
+            <div class="hero-logos-track">
+              <img class="us-ck" src="../global/hector-brand/logos/client-logos/us/calvin-klein.png" alt="Calvin Klein">
+              <img class="us-el" src="../global/hector-brand/logos/client-logos/us/estee-lauder.png" alt="Estée Lauder">
+              <img class="us-jk" src="../global/hector-brand/logos/client-logos/us/jockey.png" alt="Jockey">
+              <img class="us-th" src="../global/hector-brand/logos/client-logos/us/tommy-hilfiger.png" alt="Tommy Hilfiger">
+              <img class="us-op" src="../global/hector-brand/logos/client-logos/us/oppo.svg" alt="OPPO">
+              <img class="us-ck" src="../global/hector-brand/logos/client-logos/us/calvin-klein.png" alt="" aria-hidden="true">
+              <img class="us-el" src="../global/hector-brand/logos/client-logos/us/estee-lauder.png" alt="" aria-hidden="true">
+              <img class="us-jk" src="../global/hector-brand/logos/client-logos/us/jockey.png" alt="" aria-hidden="true">
+              <img class="us-th" src="../global/hector-brand/logos/client-logos/us/tommy-hilfiger.png" alt="" aria-hidden="true">
+              <img class="us-op" src="../global/hector-brand/logos/client-logos/us/oppo.svg" alt="" aria-hidden="true">
+              <img class="us-ck" src="../global/hector-brand/logos/client-logos/us/calvin-klein.png" alt="" aria-hidden="true">
+              <img class="us-el" src="../global/hector-brand/logos/client-logos/us/estee-lauder.png" alt="" aria-hidden="true">
+              <img class="us-jk" src="../global/hector-brand/logos/client-logos/us/jockey.png" alt="" aria-hidden="true">
+              <img class="us-th" src="../global/hector-brand/logos/client-logos/us/tommy-hilfiger.png" alt="" aria-hidden="true">
+              <img class="us-op" src="../global/hector-brand/logos/client-logos/us/oppo.svg" alt="" aria-hidden="true">
+              <img class="us-ck" src="../global/hector-brand/logos/client-logos/us/calvin-klein.png" alt="" aria-hidden="true">
+              <img class="us-el" src="../global/hector-brand/logos/client-logos/us/estee-lauder.png" alt="" aria-hidden="true">
+              <img class="us-jk" src="../global/hector-brand/logos/client-logos/us/jockey.png" alt="" aria-hidden="true">
+              <img class="us-th" src="../global/hector-brand/logos/client-logos/us/tommy-hilfiger.png" alt="" aria-hidden="true">
+              <img class="us-op" src="../global/hector-brand/logos/client-logos/us/oppo.svg" alt="" aria-hidden="true">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <div class="hero-photo" data-hero-photo>
+          <img src="../managed-service/assets/hero-team.jpg" alt="Hector's team at work in the office, reviewing campaigns together" width="1440" height="810" fetchpriority="high">
+        </div>
+
+        <div class="hero-chip hero-chip--pod" data-hero-chip>
+          <div class="hero-avs" aria-hidden="true">
+            <span class="hero-av hero-av--1">PS</span><span class="hero-av hero-av--2">DM</span><span class="hero-av hero-av--3">AK</span><span class="hero-av hero-av--4">SR</span>
+          </div>
+          <div>
+            <p class="hero-chip-t">Your pod</p>
+            <p class="hero-chip-d">4 specialists · 1 point of contact</p>
+          </div>
+        </div>
+
+                <div class="hero-chip hero-chip--result" data-hero-chip>
+          <p class="hero-chip-k">This week</p>
+          <p class="hero-chip-v"><span class="gradient">+22%</span><small>ROAS</small></p>
+          <svg class="hero-spark" viewBox="0 0 140 34" aria-hidden="true">
+            <defs><linearGradient id="sparkGrad" x1="0" x2="1"><stop offset="0" stop-color="#7C3AED"/><stop offset="1" stop-color="#C026D3"/></linearGradient></defs>
+            <path d="M2 28 L20 25 L36 27 L52 20 L70 22 L88 14 L104 16 L122 8 L138 4"/>
+          </svg>
+        </div>
+
+        <div class="hero-toast" data-hero-chip aria-live="polite">
+          <span class="hero-toast-logo"><img src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="" class="hero-toast-img"></span>
+          <div class="hero-toast-body">
+            <p class="hero-toast-t">Dev paused 112 search terms that spent without converting</p>
+            <p class="hero-toast-m">Amazon Ads · 2 min ago</p>
+          </div>
+          <span class="hero-toast-live">Live</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section class="strip" aria-label="Hector at a glance">
+    <div class="container">
+      <div class="strip-stats">
+        <div class="strip-stat" data-reveal>
+                    <div class="strip-num num gradient" data-count="120" data-prefix="$" data-suffix="M+">$120M+</div>
+          <p class="strip-lbl"><strong>ad spend</strong> managed every year</p>
+        </div>
+        <div class="strip-stat" data-reveal>
+          <div class="strip-num num" data-count="220" data-suffix="+">220+</div>
+          <p class="strip-lbl"><strong>brands</strong> scaled, from D2C to enterprise</p>
+        </div>
+        <div class="strip-stat" data-reveal>
+          <div class="strip-num num" data-count="160" data-suffix="+">160+</div>
+          <p class="strip-lbl"><strong>operators</strong> running accounts every day</p>
+        </div>
+        <div class="strip-stat" data-reveal>
+                    <div class="strip-num num">24/7</div>
+          <p class="strip-lbl"><strong>monitoring</strong> on every account, by the platform</p>
+        </div>
+      </div>
+      <div class="tbadges" data-reveal>
+        <div class="tbadges-row">
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/Amazon Ads advanced partner.png" alt="Amazon Ads Advanced Partner"></div>
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/Amazon Ads Innovation Challenge winner 2025 logo.png" alt="Amazon Ads Innovation Challenge winner 2025"></div>
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/MDS Best Partner of the Summit — Milan logo.png" alt="MDS Best Partner of the Summit, Milan"></div>
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/SOC 2 Type 1 badge.png" alt="SOC 2 Type 1"></div>
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/SOC 2 Type 2 badge.png" alt="SOC 2 Type 2"></div>
+          <div class="tbadge"><img loading="lazy" src="../hector-website-revamp/public/assets/badges/IEC 27001_2022 badge.png" alt="ISO/IEC 27001:2022"></div>
+        </div>
+      </div>
+      <div class="plats" data-reveal>
+        <p class="plats-lbl"><img class="plats-amz" src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="Amazon"><span>Your pod runs every Amazon ad product, <strong>as one funnel</strong></span></p>
+        <div class="prods">
+          <span>Sponsored Products</span><span>Sponsored Brands</span><span>Sponsored Display</span><span>Amazon DSP</span><span>Amazon Marketing Cloud</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section class="fit sec">
+    <div class="container fit-grid">
+      <div class="fit-copy" data-reveal>
+        <p class="eyebrow">Is this for you?</p>
+        <h2 class="sec-h2">Built for brands that have <span class="gradient">outgrown doing it themselves.</span></h2>
+        <p class="sec-lede">Managed Service works best when Amazon already matters to your revenue and your team can't give it full-time attention. Tick what sounds like you.</p>
+      </div>
+      <div>
+        <div class="fit-list" role="group" aria-label="Fit check">
+                    <button class="fit-opt" type="button" aria-pressed="false" data-reveal>
+            <span class="fit-box"><svg viewBox="0 0 14 14"><polyline points="2.5 7.5 5.5 10.5 11.5 3.5"/></svg></span>
+            <span><span class="fit-opt-t">We spend $50K+ a month on Amazon ads</span><span class="fit-opt-d">Or plan to within the next two quarters.</span></span>
+          </button>
+          <button class="fit-opt" type="button" aria-pressed="false" data-reveal>
+            <span class="fit-box"><svg viewBox="0 0 14 14"><polyline points="2.5 7.5 5.5 10.5 11.5 3.5"/></svg></span>
+            <span><span class="fit-opt-t">Our search and DSP are run separately</span><span class="fit-opt-d">Different people, different reports, and nobody sees the full funnel.</span></span>
+          </button>
+          <button class="fit-opt" type="button" aria-pressed="false" data-reveal>
+            <span class="fit-box"><svg viewBox="0 0 14 14"><polyline points="2.5 7.5 5.5 10.5 11.5 3.5"/></svg></span>
+            <span><span class="fit-opt-t">Our team is stretched thin</span><span class="fit-opt-d">Campaigns get attention when someone has time, not when the account needs it.</span></span>
+          </button>
+          <button class="fit-opt" type="button" aria-pressed="false" data-reveal>
+            <span class="fit-box"><svg viewBox="0 0 14 14"><polyline points="2.5 7.5 5.5 10.5 11.5 3.5"/></svg></span>
+            <span><span class="fit-opt-t">We want to grow without giving up margin</span><span class="fit-opt-d">More revenue, without watching ROAS slide every time budgets go up.</span></span>
+          </button>
+        </div>
+        <div class="fit-result" aria-live="polite" data-reveal>
+          <div class="fit-meter"><span></span></div>
+          <div class="fit-result-copy">
+            <p class="fit-result-t">Tick what sounds like you.</p>
+            <p class="fit-result-d">We'll tell you honestly whether Managed Service fits.</p>
+          </div>
+          <a href="../book-a-demo-us/" class="fit-result-link">Talk to our team →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section class="off sec">
+    <div class="container">
+      <div class="off-head" data-reveal>
+        <div>
+          <p class="eyebrow">What your pod runs</p>
+          <h2 class="sec-h2">One team. <span class="gradient">Every Amazon ad you buy.</span></h2>
+        </div>
+        <p class="sec-lede">Search, display, DSP and AMC usually sit with different people and different reports. Your pod runs them as one funnel, and you get one report.</p>
+      </div>
+
+      <div class="off-body">
+        <div class="off-tabs" role="tablist" aria-label="Managed Service offerings">
+          <button class="off-tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true" tabindex="0">
+            <span class="off-tab-n">01</span>
+            <span class="off-tab-t">Sponsored Ads</span>
+            <span class="off-tab-d">Sponsored Products, Brands and Display. Keyword strategy, bids and structure, adjusted daily by the platform and reviewed by your pod.</span>
+          </button>
+          <button class="off-tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
+            <span class="off-tab-n">02</span>
+            <span class="off-tab-t">Amazon DSP</span>
+            <span class="off-tab-d">Programmatic display, video and retargeting on and off Amazon, planned against the same goals as your search spend.</span>
+          </button>
+          <button class="off-tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">
+            <span class="off-tab-n">03</span>
+            <span class="off-tab-t">Amazon Marketing Cloud</span>
+            <span class="off-tab-d">Path-to-purchase analysis, custom audiences and incrementality, so every dollar is tied to new-to-brand growth.</span>
+          </button>
+          <button class="off-tab" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1">
+            <span class="off-tab-n">04</span>
+            <span class="off-tab-t">Prime Day &amp; tentpole events</span>
+            <span class="off-tab-d">Prime Day, Prime Big Deal Days, Black Friday and Cyber Monday. Budgets locked weeks out, bids that ramp on lead-in days, and halo retargeting after.</span>
+          </button>
+        </div>
+
+        <div class="off-stage">
+                              <div class="off-panel is-active" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+            <p class="sec-lede off-panel-desc">Sponsored Products, Brands and Display. Keyword strategy, bids and structure, adjusted daily by the platform and reviewed by your pod.</p>
+            <div class="op-top">
+              <span class="op-label">Sample week · Sponsored Ads</span>
+              <div class="op-logos"><img loading="lazy" src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="Amazon"></div>
+            </div>
+            <div class="op-card">
+              <div class="op-card-h"><span class="op-label">This week, your pod</span><span class="op-live">Live</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Moved budget from broad to exact match on the top 40 keywords</span><span class="op-task-who">Priya S.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Paused 112 search terms that spent without converting</span><span class="op-task-who">Dev M.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Launched Sponsored Brands video for the new launch ASIN</span><span class="op-task-who">Arjun K.</span></div>
+            </div>
+            <div class="op-metrics op-metrics-row">
+              <div class="op-metric"><div class="op-metric-v up num">4.2x</div><div class="op-metric-l">ROAS, up from 3.6x</div></div>
+              <div class="op-metric"><div class="op-metric-v num">9.8%</div><div class="op-metric-l">TACoS, down 1.4 pts</div></div>
+              <div class="op-metric"><div class="op-metric-v num">31%</div><div class="op-metric-l">Share of voice on category keywords</div></div>
+            </div>
+            <p class="op-foot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/><path d="M5 6h6M5 9h4"/></svg>Summarized in your Monday report</p>
+          </div>
+
+                    <div class="off-panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+            <p class="sec-lede off-panel-desc">Programmatic display, video and retargeting on and off Amazon, planned against the same goals as your search spend.</p>
+            <div class="op-top">
+              <span class="op-label">Sample week · Amazon DSP</span>
+              <div class="op-logos"><img loading="lazy" src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="Amazon"></div>
+            </div>
+            <div class="op-card">
+              <div class="op-card-h"><span class="op-label">This week, your pod</span><span class="op-live">Live</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Retargeted shoppers who viewed but didn't buy in the last 30 days</span><span class="op-task-who">Dev M.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Shifted frequency caps after creative fatigue showed on day 9</span><span class="op-task-who">Arjun K.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Moved prospecting budget to the two best in-market audiences</span><span class="op-task-who">Priya S.</span></div>
+            </div>
+            <div class="op-metrics op-metrics-row">
+              <div class="op-metric"><div class="op-metric-v up num">64%</div><div class="op-metric-l">of DSP sales new to brand</div></div>
+              <div class="op-metric"><div class="op-metric-v num">2.9x</div><div class="op-metric-l">Retargeting ROAS</div></div>
+              <div class="op-metric"><div class="op-metric-v num">−18%</div><div class="op-metric-l">Cost per new customer</div></div>
+            </div>
+            <p class="op-foot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/><path d="M5 6h6M5 9h4"/></svg>Summarized in your Monday report</p>
+          </div>
+
+                    <div class="off-panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+            <p class="sec-lede off-panel-desc">Path-to-purchase analysis, custom audiences and incrementality, so every dollar is tied to new-to-brand growth.</p>
+            <div class="op-top">
+              <span class="op-label">Sample week · AMC</span>
+              <div class="op-logos"><img loading="lazy" src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="Amazon"></div>
+            </div>
+            <div class="op-card">
+              <div class="op-card-h"><span class="op-label">This week, your pod</span><span class="op-live">Live</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Mapped the path to purchase across search, display and DSP</span><span class="op-task-who">Sneha R.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Built an audience of cart abandoners for DSP retargeting</span><span class="op-task-who">Dev M.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Ran a holdout test to measure true incremental sales</span><span class="op-task-who">Priya S.</span></div>
+            </div>
+            <div class="op-metrics op-metrics-row">
+              <div class="op-metric"><div class="op-metric-v up num">41%</div><div class="op-metric-l">of buyers saw a DSP ad before searching</div></div>
+              <div class="op-metric"><div class="op-metric-v num">12</div><div class="op-metric-l">Custom AMC audiences live</div></div>
+              <div class="op-metric"><div class="op-metric-v num">+19%</div><div class="op-metric-l">Incremental sales from SB video</div></div>
+            </div>
+            <p class="op-foot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/><path d="M5 6h6M5 9h4"/></svg>Summarized in your Monday report</p>
+          </div>
+
+                    <div class="off-panel" role="tabpanel" id="panel-4" aria-labelledby="tab-4" hidden>
+            <p class="sec-lede off-panel-desc">Prime Day, Prime Big Deal Days, Black Friday and Cyber Monday. Budgets locked weeks out, bids that ramp on lead-in days, and halo retargeting after.</p>
+            <div class="op-top">
+              <span class="op-label">Sample week · Prime Day</span>
+              <div class="op-logos"><img loading="lazy" src="../hector-website-revamp/public/assets/platform-logos/Amazon.png" alt="Amazon"></div>
+            </div>
+            <div class="op-card">
+              <div class="op-card-h"><span class="op-label">This week, your pod</span><span class="op-live">Live</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Locked Prime Day budgets by ASIN three weeks out</span><span class="op-task-who">Priya S.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Ramped bids on lead-in days to build organic rank</span><span class="op-task-who">Arjun K.</span></div>
+              <div class="op-task"><span class="op-check"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span><span>Set up a 14-day halo retargeting audience for event viewers</span><span class="op-task-who">Dev M.</span></div>
+            </div>
+            <div class="op-metrics op-metrics-row">
+              <div class="op-metric"><div class="op-metric-v up num">+38%</div><div class="op-metric-l">Sales vs last Prime Day</div></div>
+              <div class="op-metric"><div class="op-metric-v num">4.8x</div><div class="op-metric-l">ROAS on event days</div></div>
+              <div class="op-metric"><div class="op-metric-v num">0</div><div class="op-metric-l">Hours out of budget during peak</div></div>
+            </div>
+            <p class="op-foot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/><path d="M5 6h6M5 9h4"/></svg>Summarized in your Monday report</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <div class="dark-shell">
+    <section class="how sec" id="how-it-works">
+      <div class="container how-grid">
+        <div class="how-copy" data-reveal>
+          <p class="eyebrow">How it works</p>
+          <h2 class="sec-h2">Your first 30 days, <span class="gradient">then every week after.</span></h2>
+          <p class="sec-lede">A dedicated pod and one point of contact use the Hector platform, the MCP and Amazon's own consoles. You never open a dashboard unless you want to.</p>
+        </div>
+        <div class="how-tl">
+          <div class="how-rail" aria-hidden="true"><span></span></div>
+
+          <div class="how-step">
+            <span class="how-dot" aria-hidden="true"></span>
+            <p class="how-when">Days 1–5</p>
+            <h3>Audit</h3>
+            <p>Your pod goes through every campaign, keyword and listing you run. You get a written view of where spend is leaking and where growth is being left on the table.</p>
+            <div class="how-get">
+              <span class="how-get-ic"><svg viewBox="0 0 20 20"><path d="M5 2.5h7l3 3v12H5z"/><path d="M12 2.5v3h3M7.5 10h5M7.5 13h3.5"/></svg></span>
+              <span><span class="how-get-l">You receive</span><span class="how-get-t blk">Account audit and leak report</span></span>
+            </div>
+          </div>
+
+          <div class="how-step">
+            <span class="how-dot" aria-hidden="true"></span>
+            <p class="how-when">Week 2</p>
+            <h3>Plan</h3>
+            <p>Budget split across search, DSP and AMC, keyword and audience strategy, and the targets we'll be measured against. Nothing goes live until you sign off.</p>
+            <div class="how-get">
+              <span class="how-get-ic"><svg viewBox="0 0 20 20"><path d="M3 15.5l4.5-5 3.5 3 6-7"/><path d="M13 6.5h4v4"/></svg></span>
+              <span><span class="how-get-l">You receive</span><span class="how-get-t blk">90-day growth plan with targets</span></span>
+            </div>
+          </div>
+
+          <div class="how-step">
+            <span class="how-dot" aria-hidden="true"></span>
+            <p class="how-when">Week 3</p>
+            <h3>Launch</h3>
+            <p>Campaigns are restructured and Hector's automation switches on: bid rules, dayparting and stock-aware pausing. Every change happens inside your own accounts.</p>
+            <div class="how-get">
+              <span class="how-get-ic"><svg viewBox="0 0 20 20"><path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.8l5-.7z"/></svg></span>
+              <span><span class="how-get-l">You receive</span><span class="how-get-t blk">A change log of everything we touched</span></span>
+            </div>
+          </div>
+
+          <div class="how-step">
+            <span class="how-dot" aria-hidden="true"></span>
+            <p class="how-when">Every week after</p>
+            <h3>Run and report</h3>
+            <p>Daily optimization by your pod, with the platform watching every account around the clock. One report a week, one strategy call a month, and a direct line whenever something moves.</p>
+            <div class="how-get">
+              <span class="how-get-ic"><svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2.5v3M13 2.5v3"/></svg></span>
+              <span><span class="how-get-l">You receive</span><span class="how-get-t blk">Weekly report and monthly strategy review</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <section class="cmp-sec sec">
+    <div class="container">
+      <div class="cmp-head" data-reveal>
+        <p class="eyebrow">Why managed, why Hector</p>
+        <h2 class="sec-h2">Build a team, hire an agency, <span class="gradient">or get both in one.</span></h2>
+        <p class="sec-lede">Hector's tech was built by people who run the ads. Managed Service is that same team, running yours.</p>
+      </div>
+      <div class="cmp-scroll" data-reveal>
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Compare</span></th>
+              <th scope="col">Option 1<span class="cmp-col-t">In-house team</span></th>
+              <th scope="col">Option 2<span class="cmp-col-t">Typical agency</span></th>
+              <th scope="col" class="cmp-h">Option 3<span class="cmp-col-t">Hector Managed</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Who runs your accounts</th>
+              <td data-label="In-house team">3–5 specialists you hire, train and keep</td>
+              <td data-label="Typical agency">An account manager shared across many clients</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>A dedicated pod for your brand</td>
+            </tr>
+            <tr>
+              <th scope="row">Technology</th>
+              <td data-label="In-house team">Tools you buy and stitch together</td>
+              <td data-label="Typical agency">Spreadsheets and the Amazon console</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Hector platform and MCP, built in</td>
+            </tr>
+            <tr>
+              <th scope="row">Amazon coverage</th>
+              <td data-label="In-house team">Usually Sponsored Products first, DSP later</td>
+              <td data-label="Typical agency">Search or DSP, rarely both under one plan</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Sponsored Ads, DSP and AMC in one pod</td>
+            </tr>
+            <tr>
+              <th scope="row">Time to first changes</th>
+                            <td data-label="In-house team">Months, once the team is hired</td>
+              <td data-label="Typical agency">4–6 weeks of onboarding</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Audit in week one, live by week three</td>
+            </tr>
+            <tr>
+              <th scope="row">What you see</th>
+              <td data-label="In-house team">Whatever your team has time to report</td>
+              <td data-label="Typical agency">A monthly deck</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Weekly report, plus full access any time</td>
+            </tr>
+            <tr>
+              <th scope="row">Account ownership</th>
+              <td data-label="In-house team"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Yours</td>
+              <td data-label="Typical agency"><span class="cmp-mark cmp-mark--n"><svg viewBox="0 0 12 12"><path d="M3 6h6"/></svg></span>Sometimes held by the agency</td>
+              <td class="cmp-h" data-label="Hector Managed"><span class="cmp-mark cmp-mark--y"><svg viewBox="0 0 12 12"><polyline points="2 6.5 5 9 10 3"/></svg></span>Always yours</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cmp-foot" data-reveal>
+        <a href="../book-a-demo-us/" class="text-link">See what a pod would cost for your brand <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+    <div class="dark-shell">
+    <section class="proof2 sec" id="proof">
+      <div class="container">
+        <div class="proof2-grid">
+          <div data-reveal>
+                        <p class="eyebrow">Results · Dalstrong × Amazon DSP</p>
+            <h2 class="proof2-h">Proof that DSP <span class="gradient">earns its budget.</span></h2>
+            <p class="proof2-q">Dalstrong needed hard data before spending more on Amazon DSP. We compared DSP-led journeys with Sponsored-Ads-only paths in Amazon Marketing Cloud, then rebuilt the funnel around what converted.</p>
+            <div class="proof2-who">
+              <span class="proof2-logo proof2-logo--wide"><img src="../global/hector-brand/logos/client-logos/us/dalstrong.png" alt="Dalstrong" loading="lazy"></span>
+              <span><span class="proof2-name blk">Dalstrong</span><span class="proof2-role">Kitchen knives &amp; cookware · Amazon.com</span></span>
+            </div>
+            <a class="proof2-link" href="../case-studies-us/story/?s=dalstrong">Read the case study <span aria-hidden="true">→</span></a>
+          </div>
+          <div data-reveal>
+            <div class="proof2-nums">
+              <div class="proof2-n"><div class="proof2-v num" data-count="79" data-prefix="+" data-suffix="%">+79%</div><p class="proof2-l">ROAS improvement</p></div>
+              <div class="proof2-n"><div class="proof2-v num" data-count="47" data-prefix="+" data-suffix="%">+47%</div><p class="proof2-l">purchase rate</p></div>
+              <div class="proof2-n"><div class="proof2-v">−16%</div><p class="proof2-l">cost per click</p></div>
+              <div class="proof2-n"><div class="proof2-v">AMC</div><p class="proof2-l">path-to-conversion analysis behind every number</p></div>
+            </div>
+            <p class="proof2-badge"><img src="../hector-website-revamp/public/assets/badges/Amazon Ads advanced partner.png" alt="" loading="lazy">Amazon Ads Advanced Partner</p>
+          </div>
+        </div>
+
+                <div class="quotes">
+          <figure class="quote" data-reveal>
+            <p>It stopped feeling like an agency and started feeling like our team. They knew our business better than some of our own people.</p>
+            <span>Head of eCommerce · Home and lifestyle brand</span>
+          </figure>
+          <figure class="quote" data-reveal>
+            <p>They found the leak in week one. We'd been paying for it for a year without knowing.</p>
+            <span>Founder · D2C personal care brand</span>
+          </figure>
+          <figure class="quote" data-reveal>
+            <p>Same budget. The growth just stopped costing us margin. I wish we'd done this two years earlier.</p>
+            <span>Amazon lead · Apparel brand</span>
+          </figure>
+        </div>
+        <a class="proof2-all" href="../case-studies-us/">All case studies →</a>
+      </div>
+    </section>
+  </div>
+
+    <section class="faq2 sec">
+    <div class="container faq2-grid">
+      <div class="faq2-copy" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 class="sec-h2">Before you hand over <span class="gradient">the keys.</span></h2>
+        <p class="sec-lede">The questions brands ask us most in the first call.</p>
+        <a href="../book-a-demo-us/" class="text-link">Ask us something else <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="faq2-list" data-reveal>
+        <div class="faq2-item">
+          <button class="faq2-q" type="button" aria-expanded="true" aria-controls="fa-1" id="fq-1">What does my team need to do once we start?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-1" role="region" aria-labelledby="fq-1"><div><p>Very little. Share access in week one, sign off the plan in week two, then read one report a week and join a monthly strategy call. Your pod handles campaigns, bids, listings and reporting end to end.</p></div></div>
+        </div>
+        <div class="faq2-item">
+          <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-2" id="fq-2">Do we keep ownership of our ad accounts?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-2" role="region" aria-labelledby="fq-2"><div><p>Always. Your pod works inside your accounts, not ours. You keep full ownership and full visibility, and every change is logged.</p></div></div>
+        </div>
+        <div class="faq2-item">
+          <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-3" id="fq-3">Which Amazon ad products do you cover?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-3" role="region" aria-labelledby="fq-3"><div><p>Sponsored Products, Sponsored Brands and Sponsored Display, Amazon DSP, and Amazon Marketing Cloud. We plan them as one funnel and agree your exact scope in the first call.</p></div></div>
+        </div>
+        <div class="faq2-item">
+          <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-4" id="fq-4">How is this different from a traditional agency?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-4" role="region" aria-labelledby="fq-4"><div><p>Most agencies run your ads with spreadsheets and the Amazon console. Your Hector pod runs them with our own platform and MCP, so bid changes, stock-aware pausing and anomaly alerts happen around the clock, not when someone gets to it.</p></div></div>
+        </div>
+        <div class="faq2-item">
+                    <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-5" id="fq-5">How soon will we see results?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-5" role="region" aria-labelledby="fq-5"><div><p>Wasted spend is usually the first thing to go, often within the first month. Growth targets are set together in week two, and we report against them every week from then on.</p></div></div>
+        </div>
+        <div class="faq2-item">
+                    <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-6" id="fq-6">How is Managed Service priced?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-6" role="region" aria-labelledby="fq-6"><div><p>It depends on your ad products, spend and scope. After the first call we send a clear proposal, so you know exactly what you're paying for before anything starts.</p></div></div>
+        </div>
+        <div class="faq2-item">
+                    <button class="faq2-q" type="button" aria-expanded="false" aria-controls="fa-7" id="fq-7">Will our team work in our time zone?<span class="faq2-ic" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10"/></svg></span></button>
+          <div class="faq2-a" id="fa-7" role="region" aria-labelledby="fq-7"><div><p>Yes. Your point of contact keeps hours that overlap with your business day for calls and questions, and the platform watches every account around the clock, so nothing waits until morning.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <div class="cta-shell" id="close">
+    <section class="close3">
+      <div class="close3-in" data-reveal>
+        <div class="close3-copy">
+          <h2>Ready to <span class="gradient">hand it off?</span></h2>
+          <p>A 30-minute call with the people who would run your accounts.</p>
+        </div>
+        <div class="close3-act">
+          <a href="../book-a-demo-us/" class="btn-white">Book a demo <span aria-hidden="true">→</span></a>
+          <a href="../contact-us/" class="close3-ask">Ask us a question <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+            <div class="close3-foot">
+        <span>Prefer email? <a href="mailto:info@hectorai.live">info@hectorai.live</a></span>
+        <span>We reply within one working day</span>
+        <span>Offices in Delaware and Mumbai</span>
+      </div>
+    </section>
+  </div>
+
+    <footer class="ft2">
+    <div class="container">
+      <div class="ft2-cols">
+        <div>
+          <img src="../hector-website-revamp/public/assets/logos/hector-dark-bg.svg" alt="Hector" class="ft2-logo">
+          <p class="ft2-about">Hector is an outcome-led commerce growth partner for brands growing on Amazon. We manage spend, build technology and own the data, so you compound.</p>
+        </div>
+        <div><p class="ft2-h">Platform</p><ul><li><a href="#">MCP engine</a></li><li><a href="#">Toolkit</a></li><li><a href="../dsp-amc-us/">DSP &amp; AMC</a></li><li><a href="#">Nexus <span class="ft2-soon">Coming</span></a></li></ul></div>
+        <div><p class="ft2-h">Services</p><ul><li><a href="../managed-service-us/">Managed Service</a></li><li><a href="#">Sponsored ads</a></li><li><a href="../dsp-amc-us/">DSP &amp; AMC</a></li></ul></div>
+        <div><p class="ft2-h">Company</p><ul><li><a href="#">About</a></li><li><a href="../case-studies-us/">Case studies</a></li><li><a href="#">Careers</a></li><li><a href="../contact-us/">Contact</a></li></ul></div>
+      </div>
+      <div class="ft2-reach">
+        <div class="ft2-office"><p class="ft2-h">United States</p><p>Hector Ai Global Inc<br>8 The Green, STE B, Dover,<br>Kent, Delaware 19901</p><a href="tel:+18005550199">1-800-555-0199</a></div>
+        <div class="ft2-office"><p class="ft2-h">India · APAC</p><p>Hector Ai - APAC<br>Pinnacle Corporate Park, BKC,<br>Bandra East, Mumbai 400098</p><a href="tel:18000000000">1800 000 0000</a></div>
+        <div class="ft2-office"><p class="ft2-h">Get in touch</p>
+          <a href="mailto:info@hectorai.live">info@hectorai.live</a>          <a href="../contact-us/">Send us a message →</a>
+          <div class="ft2-social">
+            <a href="https://in.linkedin.com/company/hectorai" target="_blank" rel="noopener noreferrer" aria-label="Hector on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.4 8.65 21 11.1 21 14.3V21h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1V21H9z"/></svg></a>
+            <a href="https://www.youtube.com/@hector-ads" target="_blank" rel="noopener noreferrer" aria-label="Hector on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 00-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 001 7.2 31 31 0 00.6 12 31 31 0 001 16.8a3 3 0 002.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 002.1-2.1 31 31 0 00.4-4.8 31 31 0 00-.4-4.8zM9.75 15.02V8.98L15.5 12z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="ft2-bottom">
+        <p>&copy; 2026 Hector Technologies Pvt. Ltd. All rights reserved.</p>
+        <div class="ft2-badges"><span>ISO / IEC certified</span><span>SOC 1 &amp; 2 compliant</span><span>Amazon Ads Advanced Partner</span></div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+// ── Hero: live activity toast ───────────────────────────────
+(() => {
+  const P = '../hector-website-revamp/public/assets/platform-logos/';
+  const events = [
+    { logo: 'Amazon.png', t: 'Dev paused 112 search terms that spent without converting', m: 'Sponsored Products · 2 min ago' },
+    { logo: 'Amazon.png', t: 'Arjun retargeted cart abandoners with a new DSP audience', m: 'Amazon DSP · 9 min ago' },
+    { logo: 'Amazon.png', t: 'Priya locked Prime Day budgets for the top 20 ASINs', m: 'Sponsored Ads · 24 min ago' },
+    { logo: 'Amazon.png', t: 'Sneha found 41% of buyers saw a DSP ad before searching', m: 'Amazon Marketing Cloud · 41 min ago' },
+    { logo: 'Logomark', t: 'Your weekly report is ready: ROAS up 22% across search and DSP', m: 'Weekly report · Monday 9:00 ET' },
+  ];
+  const body = document.querySelector('.hero-toast-body');
+  const img = document.querySelector('.hero-toast-img');
+  if (!body) return;
+  const t = body.querySelector('.hero-toast-t'), m = body.querySelector('.hero-toast-m');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0;
+  if (reduce) return;
+  setInterval(() => {
+    i = (i + 1) % events.length;
+    body.classList.add('is-out');
+    setTimeout(() => {
+      const e = events[i];
+      t.textContent = e.t; m.textContent = e.m;
+      img.src = e.logo === 'Logomark' ? '../hector-website-revamp/public/assets/logos/Logomark.svg' : P + e.logo;
+      body.classList.remove('is-out');
+    }, 300);
+  }, 3800);
+})();
+
+// ── Fit check ───────────────────────────────────────────────
+(() => {
+  const opts = [...document.querySelectorAll('.fit-opt')];
+  const meter = document.querySelector('.fit-meter span');
+  const copy = document.querySelector('.fit-result-copy');
+  const title = document.querySelector('.fit-result-t');
+  const desc = document.querySelector('.fit-result-d');
+  const link = document.querySelector('.fit-result-link');
+  const states = [
+    { t: "Tick what sounds like you.", d: "We'll tell you honestly whether Managed Service fits.", l: "Talk to our team →", h: "../book-a-demo-us/" },
+    { t: "Worth a conversation.", d: "One box ticked can still mean a fit. The self-serve platform might suit you too.", l: "Compare both on a call →", h: "../book-a-demo-us/" },
+    { t: "Sounds like a fit.", d: "Brands like you usually see the biggest gains in the first 90 days.", l: "Talk to our team →", h: "../book-a-demo-us/" },
+    { t: "Sounds like a strong fit.", d: "This is the exact situation Managed Service was built for.", l: "Meet your pod →", h: "../book-a-demo-us/" },
+    { t: "You're exactly who we built this for.", d: "Let's look at your accounts together. The audit is where it starts.", l: "Book the first call →", h: "../book-a-demo-us/" },
+  ];
+  const update = () => {
+    const n = opts.filter(o => o.getAttribute('aria-pressed') === 'true').length;
+    const s = states[n];
+    const box = document.querySelector('.fit-result');
+    const wasFit = box.classList.contains('is-fit');
+    box.classList.toggle('is-fit', n >= 2);
+    if (n >= 2 && !wasFit && window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.fromTo(link, { scale: 0.92 }, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.5)', delay: 0.18 });
+    }
+    meter.style.width = (n / opts.length * 100) + '%';
+    copy.style.opacity = 0;
+    setTimeout(() => { title.textContent = s.t; desc.textContent = s.d; link.textContent = s.l; link.href = s.h; copy.style.opacity = 1; }, 160);
+  };
+  opts.forEach(o => o.addEventListener('click', () => {
+    o.setAttribute('aria-pressed', o.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    update();
+  }));
+})();
+
+// ── Offerings tabs ──────────────────────────────────────────
+(() => {
+  const tabs = [...document.querySelectorAll('.off-tab')];
+  const panels = [...document.querySelectorAll('.off-panel')];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const show = (i, focus) => {
+    tabs.forEach((t, j) => {
+      const on = i === j;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      panels[j].hidden = !on;
+      panels[j].classList.toggle('is-active', on);
+    });
+    if (focus) tabs[i].focus();
+    if (window.gsap && !reduce) {
+      const p = panels[i];
+      gsap.fromTo(p.querySelectorAll('.op-top, .op-card, .op-metric, .op-foot'),
+        { autoAlpha: 0, y: 14 },
+        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out', overwrite: true });
+      gsap.fromTo(p.querySelectorAll('.op-task'),
+        { autoAlpha: 0, x: -8 },
+        { autoAlpha: 1, x: 0, duration: 0.4, stagger: 0.08, delay: 0.15, ease: 'power2.out', overwrite: true });
+    }
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(i));
+    t.addEventListener('keydown', e => {
+      const k = e.key;
+      if (['ArrowDown', 'ArrowRight'].includes(k)) { e.preventDefault(); show((i + 1) % tabs.length, true); }
+      if (['ArrowUp', 'ArrowLeft'].includes(k)) { e.preventDefault(); show((i - 1 + tabs.length) % tabs.length, true); }
+    });
+  });
+})();
+
+// ── FAQ ─────────────────────────────────────────────────────
+document.querySelectorAll('.faq2-q').forEach(q => {
+  q.addEventListener('click', () => {
+    q.setAttribute('aria-expanded', q.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+  });
+});
+
+// ── Scroll motion (GSAP) ────────────────────────────────────
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    // Hero intro: copy rises in, photo opens from a soft inset, overlays land last
+    const hero = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    hero.from('[data-hero]', { autoAlpha: 0, y: 22, duration: 0.8, stagger: 0.08 })
+        .from('[data-hero-photo]', { clipPath: 'inset(6% 6% 6% 6% round 28px)', scale: 1.04, duration: 1.1, ease: 'power2.out' }, 0.1)
+        .from('[data-hero-photo] img', { scale: 1.12, duration: 1.6, ease: 'power2.out' }, 0.1)
+        .from('[data-hero-chip]', { autoAlpha: 0, y: 16, scale: 0.96, duration: 0.7, stagger: 0.14, ease: 'back.out(1.6)' }, 0.55)
+        .from('.hero-spark path', { strokeDasharray: 200, strokeDashoffset: 200, duration: 1.2, ease: 'power2.inOut' }, 0.9);
+    // Gentle drift on the photo while scrolling out of the hero
+    gsap.to('[data-hero-photo] img', { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+    // Reveal: staggered fade-up as blocks enter
+    gsap.set('[data-reveal]', { autoAlpha: 0, y: 24 });
+    ScrollTrigger.batch('[data-reveal]', {
+      start: 'top 88%',
+      once: true,
+      onEnter: els => gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', overwrite: true })
+    });
+
+    // Count-up numbers
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const end = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      const o = { v: 0 };
+      el.textContent = pre + '0' + suf;
+      gsap.to(o, {
+        v: end, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        onUpdate: () => { el.textContent = pre + Math.round(o.v) + suf; }
+      });
+    });
+
+    // Timeline rail fills with scroll; steps light up as the rail reaches them
+    const tl = document.querySelector('.how-tl');
+    gsap.fromTo('.how-rail span', { scaleY: 0 }, {
+      scaleY: 1, ease: 'none',
+      scrollTrigger: { trigger: tl, start: 'top 65%', end: 'bottom 65%', scrub: 0.6 }
+    });
+    document.querySelectorAll('.how-step').forEach(step => {
+      ScrollTrigger.create({
+        trigger: step, start: 'top 65%',
+        onEnter: () => step.classList.add('is-on'),
+        onLeaveBack: () => step.classList.remove('is-on')
+      });
+      gsap.from(step.children, {
+        autoAlpha: 0.25, y: 16, duration: 0.7, stagger: 0.06, ease: 'power3.out',
+        scrollTrigger: { trigger: step, start: 'top 75%', once: true }
+      });
+    });
+
+    // Hector column lifts in after the table appears
+    gsap.from('.cmp .cmp-h', {
+      backgroundColor: 'rgba(255,255,255,0)', duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: '.cmp', start: 'top 75%', once: true }
+    });
+    gsap.from('.cmp .cmp-mark--y', {
+      scale: 0, duration: 0.45, stagger: 0.07, ease: 'back.out(2)',
+      scrollTrigger: { trigger: '.cmp', start: 'top 70%', once: true }
+    });
+  });
+
+  mm.add('(prefers-reduced-motion: reduce)', () => {
+    document.querySelectorAll('.how-step').forEach(s => s.classList.add('is-on'));
+  });
+
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+} else {
+  document.querySelectorAll('.how-step').forEach(s => s.classList.add('is-on'));
+}
+</script>
+<script>
+// ── Navigation: mega menus (hover + click + keyboard) ───────
+(() => {
+  const triggers = [...document.querySelectorAll('.nav-trigger')];
+  const scrim = document.querySelector('.mm-scrim');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  let open = null, closeTimer;
+  const panelOf = t => document.getElementById(t.getAttribute('aria-controls'));
+  const close = () => {
+    if (!open) return;
+    const p = panelOf(open); open.setAttribute('aria-expanded', 'false');
+    p.classList.remove('is-open'); scrim.classList.remove('is-on');
+    const was = p; setTimeout(() => { if (!was.classList.contains('is-open')) was.hidden = true; }, 220);
+    open = null;
+  };
+  const show = t => {
+    clearTimeout(closeTimer);
+    if (open === t) return;
+    if (open) { const p = panelOf(open); open.setAttribute('aria-expanded', 'false'); p.classList.remove('is-open'); p.hidden = true; }
+    const p = panelOf(t); p.hidden = false; requestAnimationFrame(() => { if (open === t) p.classList.add('is-open'); });
+    t.setAttribute('aria-expanded', 'true'); scrim.classList.add('is-on'); open = t;
+  };
+  const later = () => { clearTimeout(closeTimer); closeTimer = setTimeout(close, 160); };
+  triggers.forEach(t => {
+    const p = panelOf(t);
+    // On mouse devices hovering already opens it, so a click shouldn't toggle it shut
+    t.addEventListener('click', () => (open === t && !canHover ? close() : show(t)));
+    if (canHover) {
+      t.addEventListener('mouseenter', () => show(t));
+      t.addEventListener('mouseleave', later);
+      p.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+      p.addEventListener('mouseleave', later);
+    }
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); show(t); p.querySelector('a')?.focus(); }
+    });
+    p.addEventListener('keydown', e => { if (e.key === 'Escape') { close(); t.focus(); } });
+    p.addEventListener('focusout', e => { if (!p.contains(e.relatedTarget) && e.relatedTarget !== t) later(); });
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) { const t = open; close(); t.focus(); } });
+  document.addEventListener('click', e => { if (open && !e.target.closest('.nav')) close(); });
+  scrim.addEventListener('click', close);
+  window.addEventListener('scroll', () => { if (open && !canHover) close(); }, { passive: true });
+})();
+
+// ── Mobile menu + accordions ────────────────────────────────
+(() => {
+  const btn = document.querySelector('.nav-burger'), menu = document.getElementById('mob-nav');
+  if (!btn || !menu) return;
+  const set = open => {
+    btn.setAttribute('aria-expanded', open); btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.classList.toggle('menu-open', open);
+    if (open) { menu.hidden = false; requestAnimationFrame(() => menu.classList.add('is-open')); menu.querySelector('button, a').focus(); }
+    else { menu.classList.remove('is-open'); menu.hidden = true; }
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('.mob-acc-btn').forEach(b => b.addEventListener('click', () => {
+    const body = b.nextElementSibling, on = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', on); body.hidden = !on;
+  }));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); } });
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) set(false); });
+})();
+</script>
+</body>
+</html>
